@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1094903406381",
+    "project_id": "anidekoapp",
+    "storage_bucket": "anidekoapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1094903406381:android:5f199368468d119804fda4",
+        "android_client_info": {
+          "package_name": "com.AniDeko.anidekoandroid"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGgqPriVlv70V24B7J74HQ59aHLv-7aM0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
