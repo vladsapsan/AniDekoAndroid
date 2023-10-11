@@ -15,6 +15,7 @@ import com.AniDeko.anidekoandroid.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    Boolean isUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
