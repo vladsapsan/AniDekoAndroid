@@ -6,4 +6,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="AuthText">Войдите или создайте профиль, чтобы открыть для себя весь функционал приложения</string>
+    <string name="LosePassword">Забыли пароль?</string>
+    <string name="Skip">Пропустить</string>
+    <string name="Enter">Войти</string>
+    <string name="Registration">Регистрация</string>
 </resources>
