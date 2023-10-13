@@ -1,22 +1,238 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/MainBlack"
+    android:id="@+id/HomeFragmentContainer"
     tools:context=".ui.home.HomeFragment">
 
-    <TextView
-        android:id="@+id/text_home"
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        app:tint ="@color/MainWhite"
+        app:fabSize="mini"
+        app:srcCompat ="@drawable/search24px"
+        app:backgroundTint="@color/MainBlack"
+        android:layout_marginRight="16dp"
+        style="?attr/floatingActionButtonSmallStyle"
+        android:layout_marginTop="32dp"
+        app:elevation = "8dp"
+        app:rippleColor = "@color/MainWhite"
+        app:pressedTranslationZ = "10dp"
+        android:layout_gravity="right|top"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="420dp">
+        <ImageView
+            android:id="@+id/MainAnimeImageView"
+            android:layout_width="match_parent"
+            android:src="@drawable/imagedecor"
+            android:scaleType="centerCrop"
+            android:layout_height="match_parent"/>
+        <LinearLayout
+            android:layout_gravity="bottom"
+            android:orientation="vertical"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                app:strokeWidth="0dp"
+                android:layout_marginBottom="6dp"
+                app:cardCornerRadius="6dp"
+                app:cardBackgroundColor="@color/MainBlackTransparent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_marginTop="6dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="6dp"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_fire"/>
+                            <TextView
+                                android:layout_marginLeft="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="Самое обсуждаемое!"
+                                android:textSize="14dp"
+                                android:textColor="@color/MainWhite"
+                                android:fontFamily="@font/montserrat_regular"
+                                android:gravity="center_horizontal" />
+
+                            <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+                                <com.google.android.material.card.MaterialCardView
+                                    android:layout_width="wrap_content"
+                                    android:layout_gravity="right|center"
+                                    app:strokeColor="@color/MainBlue"
+                                    app:cardElevation="5dp"
+                                    app:cardCornerRadius="6dp"
+                                    app:cardBackgroundColor="@color/MainBlackTransparent"
+                                    android:layout_height="wrap_content">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="6dp"
+                                        android:layout_marginTop="2dp"
+                                        android:layout_marginBottom="2dp"
+                                        android:layout_marginRight="6dp"
+                                        android:text="0.0"
+                                        android:textSize="14dp"
+                                        android:textColor="@color/MainBlue"
+                                        android:fontFamily="@font/montserrat_regular"
+                                        android:gravity="center_horizontal" />
+                                </com.google.android.material.card.MaterialCardView>
+                            </FrameLayout>
+                        </LinearLayout>
+
+                    </FrameLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Название аниме!"
+                        android:textSize="20dp"
+                        android:lines="1"
+                        android:textColor="@color/MainWhite"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:gravity="center_horizontal" />
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Дополнительное название аниме"
+                            android:textSize="14dp"
+                            android:textColor="@color/SupportGrayText"
+                            android:fontFamily="@font/montserrat_bold"
+                            android:gravity="center_horizontal" />
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="wrap_content"
+                            android:layout_gravity="right|center"
+                            app:strokeColor="@color/MainBlue"
+                            app:cardElevation="5dp"
+                            app:cardCornerRadius="6dp"
+                            app:cardBackgroundColor="@color/MainBlackTransparent"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="2dp"
+                                android:orientation="horizontal"
+                                android:layout_height="wrap_content">
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_chat"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="6dp"
+                                    android:layout_marginBottom="2dp"
+                                    android:layout_marginRight="6dp"
+                                    android:text="99 999"
+                                    android:textSize="14dp"
+                                    android:textColor="@color/MainWhite"
+                                    android:fontFamily="@font/montserrat_regular"
+                                    android:gravity="center_horizontal" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+                    </FrameLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_semi_bold"
+                    app:icon="@drawable/start24px"
+                    android:backgroundTint="@color/MainBlack"
+                    android:text="Перейти"/>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    app:tint ="@color/MainWhite"
+                    app:fabSize="mini"
+                    app:rippleColor = "@color/MainWhite"
+                    app:srcCompat ="@drawable/grade24px"
+                    style="?attr/floatingActionButtonSmallStyle"
+                    app:backgroundTint="@color/MainBlack"
+                    android:layout_gravity="right|top"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
+
+        </LinearLayout>
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="12dp"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Подборка аниме"
+                android:textSize="18dp"
+                android:lines="1"
+                android:textColor="@color/MainWhite"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="center_horizontal" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Смотреть все"
+                android:textSize="12dp"
+                android:lines="1"
+                android:textColor="@color/MainBlue"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="center_horizontal" />
+        </LinearLayout>
+    </FrameLayout>
+
+
+</LinearLayout>
+    </ScrollView>
+</FrameLayout>

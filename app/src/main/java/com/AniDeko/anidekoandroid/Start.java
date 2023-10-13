@@ -3,6 +3,7 @@ package com.AniDeko.anidekoandroid;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.RenderEffect;
 import android.graphics.Shader;
@@ -10,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -17,6 +19,7 @@ import android.widget.ImageView;
 public class Start extends AppCompatActivity {
 
     FrameLayout BlurFrame;
+    Button startButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +38,15 @@ public class Start extends AppCompatActivity {
         }
 
 
+        //Кнопка старта
+        startButton = findViewById(R.id.StartButton);
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Start.this,MainActivity.class));
+                finish();
+            }
+        });
 
     }
 }

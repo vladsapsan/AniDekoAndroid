@@ -58,6 +58,9 @@
                 android:gravity="center_horizontal" />
 
             <Button
+                app:icon="@drawable/person24px"
+                app:iconGravity = "textStart"
+                android:id="@+id/StartButton"
                 android:backgroundTint="@color/MainBlack"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"

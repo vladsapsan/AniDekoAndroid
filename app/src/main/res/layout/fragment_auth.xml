@@ -4,29 +4,29 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
+    android:id="@+id/AuthFragmentContainer"
     android:layout_height="match_parent"
-    tools:context=".AuthFragment">
-
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_margin="20dp"
-        app:tint="@color/MainBlack"
-        android:layout_gravity="left|top"
-        style="?attr/floatingActionButtonSmallStyle"
-        android:backgroundTint="@color/white"
-        app:srcCompat="@drawable/expand_more24px"
-        android:layout_height="wrap_content"/>
+    android:backgroundTint="@color/MainWhite"
+    tools:context=".ui.Auth.AuthFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/SettingsButton"
         android:layout_width="wrap_content"
         app:tint="@color/MainWhite"
         android:layout_gravity="right|top"
-        android:layout_margin="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
         style="?attr/floatingActionButtonSmallStyle"
         android:backgroundTint="@color/MainBlack"
         app:srcCompat="@drawable/settings24px"
         android:layout_height="wrap_content"/>
+
+
+    <ScrollView
+        android:isScrollContainer="false"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 
     <LinearLayout
         android:layout_marginTop="90dp"
@@ -34,6 +34,9 @@
         android:orientation="vertical"
         android:gravity="center_horizontal"
         android:layout_height="match_parent">
+
+
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -62,8 +65,8 @@
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
             android:layout_width="match_parent"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             app:startIconDrawable="@drawable/mail24px"
             app:startIconContentDescription="fddsa">
             <EditText
@@ -82,8 +85,8 @@
             app:endIconMode="password_toggle"
             app:boxCornerRadiusTopStart="10dp"
             android:layout_width="match_parent"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             app:startIconDrawable="@drawable/lock24px"
             app:startIconContentDescription="fddsa">
             <EditText
@@ -182,12 +185,24 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"/>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/AuthWithGoogleButton"
             android:layout_width="60dp"
+            app:strokeWidth="0dp"
+            app:cardElevation="10dp"
+            app:cardPreventCornerOverlap="false"
+            android:foreground="?attr/selectableItemBackground"
+            android:clickable="true"
             android:layout_gravity="center"
-            android:backgroundTint="@color/MainBlack"
-            android:layout_height="60dp"/>
+            app:cardBackgroundColor="@color/MainBlack"
+            android:layout_height="60dp">
+            <ImageView
+                android:clickable="false"
+                android:layout_width="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_google_foreground"
+                android:layout_height="match_parent"/>
+        </com.google.android.material.card.MaterialCardView>
 
 
         <Space
@@ -207,7 +222,9 @@
                 android:fontFamily="@font/montserrat_regular"
                 android:gravity="center_horizontal" />
             <TextView
-                android:id="@+id/Registration"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:id="@+id/RegistrationButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="6dp"
@@ -222,4 +239,5 @@
 
 
     </LinearLayout>
+    </ScrollView>
 </FrameLayout>
