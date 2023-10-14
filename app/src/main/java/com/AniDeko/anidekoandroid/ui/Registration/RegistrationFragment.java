@@ -27,6 +27,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.transition.MaterialSharedAxis;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import org.w3c.dom.Text;
 
@@ -38,7 +39,7 @@ public class RegistrationFragment extends Fragment {
     ImageView BackButton;
     Button finishRegistrationButton;
     MainActivity mainActivity;
-    EditText PasswordRegistrationEditText,EmailRegistrationEditText;
+    EditText PasswordRegistrationEditText,EmailRegistrationEditText,NickNameRegistrationEditText;
 
     public RegistrationFragment() {
         // Required empty public constructor
@@ -80,6 +81,7 @@ public class RegistrationFragment extends Fragment {
         mainActivity = (MainActivity) getActivity();
         PasswordRegistrationEditText = view.findViewById(R.id.PasswordRegistrationEditText);
         EmailRegistrationEditText = view.findViewById(R.id.EmailRegistrationEditText);
+        NickNameRegistrationEditText = view.findViewById(R.id.NickNameRegistrationEditText);
 
 
 
@@ -95,6 +97,11 @@ public class RegistrationFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            //Добавляем никнейм в базу
+                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                    .setDisplayName(NickNameRegistrationEditText.getText().toString())
+                                    .build();
+                            mainActivity.auth.getCurrentUser().updateProfile(profileUpdates);
                             mainActivity.Auth();
                         }else {
                             Toast.makeText(getContext(),"Что-то пошло не так при создании аккаунта",Toast.LENGTH_SHORT).show();

@@ -5,17 +5,116 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ProfileFragmentConteiner"
+    android:background="@color/MainBlack"
     tools:context=".ui.profile.ProfileFragment">
+
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/SettingsButton"
+        android:layout_width="wrap_content"
+        app:tint="@color/MainWhite"
+        android:layout_gravity="right|top"
+        android:layout_marginRight="20dp"
+        app:rippleColor="@color/MainWhiteTransparent"
+        android:layout_marginTop="30dp"
+        style="?attr/floatingActionButtonSmallStyle"
+        android:backgroundTint="@color/MainBlackTransparent"
+        app:srcCompat="@drawable/manage_accounts24px"
+        android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="match_parent">
-        <TextView
-            android:textSize="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Профиль" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/SeconsPhotoProfile"
+                android:layout_width="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/sceletonpictures"
+                android:layout_height="130dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="100dp"
+                android:layout_marginLeft="16dp"
+                android:layout_gravity="bottom"
+                android:layout_height="wrap_content">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="100dp"
+                    app:strokeWidth="0dp"
+                    app:strokeColor="@color/MainWhite"
+                    app:cardCornerRadius="100dp"
+                    app:cardElevation="5dp"
+                    android:layout_height="100dp">
+                    <ImageView
+                        android:id="@+id/PhotoProfile"
+                        android:layout_width="match_parent"
+                        android:src="@drawable/imagedecor"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"/>
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:clickable="true"
+                    app:rippleColor="@color/MainWhiteTransparent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginRight="8dp"
+                    app:strokeWidth="0dp"
+                    android:layout_width="wrap_content"
+                    app:cardBackgroundColor="@color/MainBlack"
+                    android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/UserNameTextView"
+                            android:textSize="16dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_semi_bold"
+                            android:textColor="@color/MainWhite"
+                            android:text="Имя Пользователя"/>
+                        <ImageView
+                            android:layout_marginLeft="6dp"
+                            android:layout_gravity="center"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/info24px"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/UserStatusTextView"
+                        android:maxLines="4"
+                        android:textSize="12dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:textColor="@color/MainWhite"
+                        android:text="основная подпись пользователя, его статус на главном экране"/>
+                </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+        </FrameLayout>
 
         <Button
             android:id="@+id/ExitFromAccButton"
@@ -36,5 +135,5 @@
             android:layout_marginTop="20dp"
             android:text="@string/ExitProfile"/>
     </LinearLayout>
-
+</FrameLayout>
 </FrameLayout>

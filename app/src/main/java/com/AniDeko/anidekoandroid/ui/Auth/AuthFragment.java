@@ -38,7 +38,6 @@ public class AuthFragment extends Fragment {
 
 
     MainActivity mainActivity;
-    FloatingActionButton SettingsButton;
     Button AuthButton;
     TextView SkipButton,LosePasswordButton,RegistrationButton;
     CardView AuthWithGoogleButton;
