@@ -10,4 +10,6 @@
     <string name="Skip">Пропустить</string>
     <string name="Enter">Войти</string>
     <string name="Registration">Регистрация</string>
+    <string name="RegistrationText">Войдите или создайте профиль, чтобы открыть для себя полный функционал приложения</string>
+    <string name="AgreeText">Нажимая кнопку продолжить, вы принимаете <a href='https://stackoverflow.com/'> пользовательское соглашение </a> и <a href='https://vk.com/'> правила сообщества </a></string>
 </resources>

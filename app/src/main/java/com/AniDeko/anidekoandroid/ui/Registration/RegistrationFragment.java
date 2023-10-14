@@ -10,14 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.AniDeko.anidekoandroid.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.w3c.dom.Text;
+
 
 public class RegistrationFragment extends Fragment {
-
-
 
     ImageView BackButton;
 
