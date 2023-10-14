@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.AniDeko.anidekoandroid.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.transition.MaterialSharedAxis;
 
 import org.w3c.dom.Text;
 
@@ -36,6 +37,8 @@ public class RegistrationFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setEnterTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
+        setReturnTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
     }
 
     @Override

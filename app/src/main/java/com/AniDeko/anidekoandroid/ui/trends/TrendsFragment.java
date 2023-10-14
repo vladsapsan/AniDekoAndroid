@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.AniDeko.anidekoandroid.R;
+import com.google.android.material.transition.MaterialFadeThrough;
 
 
 public class TrendsFragment extends Fragment {
@@ -19,15 +20,7 @@ public class TrendsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TrendsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static TrendsFragment newInstance(String param1, String param2) {
         TrendsFragment fragment = new TrendsFragment();
         Bundle args = new Bundle();
@@ -38,7 +31,8 @@ public class TrendsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setExitTransition(new MaterialFadeThrough());
+        setEnterTransition(new MaterialFadeThrough());
     }
 
     @Override

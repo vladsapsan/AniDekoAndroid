@@ -20,6 +20,7 @@ import com.AniDeko.anidekoandroid.R;
 import com.AniDeko.anidekoandroid.ui.Registration.RegistrationFragment;
 import com.AniDeko.anidekoandroid.ui.home.HomeFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.transition.MaterialSharedAxis;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,6 +52,8 @@ public class AuthFragment extends Fragment {
         if (getArguments() != null) {
 
         }
+        setExitTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
+        setReenterTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
     }
 
     @Override
@@ -63,12 +66,6 @@ public class AuthFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
-
-        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        getActivity().getWindow().setStatusBarColor(getActivity().getResources().getColor(R.color.MainBlack));
 
 
 

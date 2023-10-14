@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.AniDeko.anidekoandroid.ui.Auth.AuthFragment;
 import com.AniDeko.anidekoandroid.R;
+import com.google.android.material.transition.MaterialFadeThrough;
 
 
 public class ProfileFragment extends Fragment {
@@ -33,6 +34,8 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setExitTransition(new MaterialFadeThrough());
+        setEnterTransition(new MaterialFadeThrough());
     }
 
     @Override

@@ -14,12 +14,15 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/nav_view"
             android:layout_gravity="bottom"
+            app:itemRippleColor="@color/ShadowMainBlue"
             app:itemIconSize="28dp"
             app:itemIconTint="@color/white"
-            app:itemTextColor="@color/white"
+            app:itemTextAppearanceActiveBoldEnabled="true"
+            app:itemTextColor="@color/bottom_menu_item_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/MainBlack"
+            app:itemActiveIndicatorStyle="@style/App.Custom.Indicator"
             app:menu="@menu/bottom_nav_menu" />
 
 

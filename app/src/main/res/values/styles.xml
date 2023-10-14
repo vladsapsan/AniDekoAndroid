@@ -8,6 +8,7 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    //Стиль всего приложения тобишь главного менй активити
     <style name="Theme" parent="Theme.Material3.Light.NoActionBar">
         <item name="android:windowBackground">@color/MainBlack</item>
         <item name="bottomAppBarStyle">@color/MainBlack</item>
@@ -19,5 +20,12 @@
         //цвет нижнего системного навигационного меню
         <item name="android:navigationBarColor">@color/MainBlack</item>
         <item name="android:windowLightNavigationBar">true</item>
+    </style>
+
+
+    //Стиль нижнего навигационного меню
+    <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/MainBlue</item>
+        <item name="android:fontFamily">@font/montserrat_regular</item>
     </style>
 </resources>
