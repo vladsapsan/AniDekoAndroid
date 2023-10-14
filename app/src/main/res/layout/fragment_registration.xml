@@ -8,9 +8,10 @@
     tools:context=".ui.Registration.RegistrationFragment">
 
     <ImageView
-        android:id="@+id/BackButton"
+        android:id="@+id/BackToAuthButton"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:paddingLeft="10dp"
         app:tint="@color/MainBlack"
         android:layout_gravity="left|top"
         android:layout_marginLeft="20dp"
@@ -62,10 +63,14 @@
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
                 android:layout_marginLeft="30dp"
+                app:boxStrokeColor="@color/MainBlue"
+                app:hintTextColor="@color/text_box_selector"
                 android:layout_marginRight="30dp"
                 app:startIconDrawable="@drawable/mail24px" >
-
                 <EditText
+                    android:id="@+id/EmailRegistrationEditText"
+                    android:textSize="13dp"
+                    android:inputType="textWebEmailAddress"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/montserrat_regular"
@@ -76,15 +81,23 @@
                 android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:counterEnabled="true"
+                app:helperText="Никнейм должен быть уникальным"
+                app:counterMaxLength="35"
                 app:boxCornerRadiusBottomEnd="10dp"
                 app:boxCornerRadiusBottomStart="10dp"
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
+                app:boxStrokeColor="@color/MainBlue"
+                app:hintTextColor="@color/text_box_selector"
                 app:startIconDrawable="@drawable/person24px" >
 
                 <EditText
+                    android:id="@+id/NickNameRegistrationEditText"
+                    android:textSize="13dp"
+                    android:inputType="text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/montserrat_regular"
@@ -104,9 +117,13 @@
                 app:boxCornerRadiusTopStart="10dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
+                app:hintTextColor="@color/text_box_selector"
+                app:boxStrokeColor="@color/MainBlue"
                 app:startIconDrawable="@drawable/key24px" >
 
                 <EditText
+                    android:id="@+id/PasswordRegistrationEditText"
+                    android:textSize="13dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/montserrat_regular"
@@ -115,16 +132,19 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
+                android:id="@+id/finishRegistrationButton"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="30dp"
+                android:backgroundTint="@color/MainBlack"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
                 android:layout_gravity="center_horizontal"
                 android:fontFamily="@font/montserrat_bold"
+                android:layout_marginBottom="6dp"
                 android:stateListAnimator="@null"
                 android:translationZ="5dp"
-                android:elevation="1dp"
+                android:elevation="6dp"
                 android:text="Продолжить"
                 android:textSize="14dp" />
 
@@ -181,6 +201,7 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/AuthWithGoogleButton"
+                android:layout_marginBottom="80dp"
                 android:layout_width="60dp"
                 app:strokeWidth="0dp"
                 app:cardElevation="10dp"
@@ -200,8 +221,9 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+
+
         </LinearLayout>
-        
     </ScrollView>
 
 </FrameLayout>

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.AniDeko.anidekoandroid.MainActivity;
 import com.AniDeko.anidekoandroid.ui.Auth.AuthFragment;
 import com.AniDeko.anidekoandroid.R;
 import com.google.android.material.transition.MaterialFadeThrough;
@@ -18,8 +19,8 @@ import com.google.android.material.transition.MaterialFadeThrough;
 
 public class ProfileFragment extends Fragment {
 
+    MainActivity mainActivity;
 
-    Boolean isSign = false;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -48,7 +49,10 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if(isSign==false){
+        //Получаем данные из Mainactivity
+        mainActivity = (MainActivity) getActivity();
+        //Проверка авторизации
+        if(mainActivity.UserisSign==false){
             //Открытие окна авторизации если пользователь не авторизован
             AuthFragment AuthFragment = new AuthFragment();
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -56,6 +60,8 @@ public class ProfileFragment extends Fragment {
                 fragmentManager.beginTransaction()
                         .replace(R.id.ProfileFragmentConteiner, AuthFragment, "Auth").commit();
             }
+        }else {
+
         }
     }
 }

@@ -3,6 +3,7 @@ package com.AniDeko.anidekoandroid;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.AniDeko.anidekoandroid.ui.Auth.AuthFragment;
 import com.AniDeko.anidekoandroid.ui.home.HomeFragment;
 import com.AniDeko.anidekoandroid.ui.profile.ProfileFragment;
 import com.AniDeko.anidekoandroid.ui.trends.TrendsFragment;
@@ -18,11 +19,15 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.AniDeko.anidekoandroid.databinding.ActivityMainBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    Boolean isUser;
+    public Boolean UserisSign;
+    public FirebaseAuth auth;
+    public  FirebaseUser currentUser;
     ProfileFragment ProfileFragment;
     HomeFragment homeFragment;
     TrendsFragment TrendsFragment;
@@ -43,6 +48,10 @@ public class MainActivity extends AppCompatActivity {
         TrendsFragment = new TrendsFragment();
         ProfileFragment = new ProfileFragment();
         setFragment(homeFragment, "1", 1);
+
+
+        //Инициализация при создании
+        auth = FirebaseAuth.getInstance();
 
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -91,4 +100,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        //Пробуем авторизоваться
+        currentUser = auth.getCurrentUser();
+        if(currentUser != null){
+            UserisSign = true;
+        }else {
+            UserisSign = false;
+        }
+    }
 }
