@@ -10,16 +10,19 @@ import androidx.fragment.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.AniDeko.anidekoandroid.MainActivity;
 import com.AniDeko.anidekoandroid.ui.Auth.AuthFragment;
 import com.AniDeko.anidekoandroid.R;
 import com.google.android.material.transition.MaterialFadeThrough;
+import com.google.android.material.transition.MaterialSharedAxis;
 
 
 public class ProfileFragment extends Fragment {
 
     MainActivity mainActivity;
+    Button ExitFromAccButton;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -55,13 +58,20 @@ public class ProfileFragment extends Fragment {
         if(mainActivity.UserisSign==false){
             //Открытие окна авторизации если пользователь не авторизован
             AuthFragment AuthFragment = new AuthFragment();
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            if(fragmentManager.findFragmentByTag("Auth")==null) {
-                fragmentManager.beginTransaction()
-                        .replace(R.id.ProfileFragmentConteiner, AuthFragment, "Auth").commit();
-            }
+             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.ProfileFragmentConteiner, AuthFragment, "Auth").commit();
         }else {
 
         }
+
+
+        //Кнопка выхода из профиля
+        ExitFromAccButton = view.findViewById(R.id.ExitFromAccButton);
+        ExitFromAccButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivity.auth.signOut();
+                mainActivity.Auth();
+            }
+        });
     }
 }

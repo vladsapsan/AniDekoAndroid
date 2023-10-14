@@ -100,15 +100,31 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
+
+    public void Auth(){
         //Пробуем авторизоваться
         currentUser = auth.getCurrentUser();
         if(currentUser != null){
             UserisSign = true;
+            if(getSupportFragmentManager().findFragmentByTag("Auth")!=null) {
+                fm.beginTransaction().remove(ProfileFragment).commit();
+                ProfileFragment = new ProfileFragment();
+                setFragment(homeFragment, "1", 1);
+            }
         }else {
             UserisSign = false;
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            if(fragmentManager.findFragmentByTag("3")!=null) {
+                AuthFragment AuthFragment = new AuthFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.ProfileFragmentConteiner, AuthFragment, "Auth").commit();
+            }
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Auth();
     }
 }

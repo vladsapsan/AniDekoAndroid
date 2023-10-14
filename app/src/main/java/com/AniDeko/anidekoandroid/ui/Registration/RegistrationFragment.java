@@ -89,16 +89,13 @@ public class RegistrationFragment extends Fragment {
         finishRegistrationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(EmailRegistrationEditText.getText().length()!=0)
+                if(EmailRegistrationEditText.getText().length()!=0){}
                 mainActivity.auth.createUserWithEmailAndPassword(EmailRegistrationEditText.getText().toString(),PasswordRegistrationEditText.getText().toString())
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            mainActivity.currentUser = mainActivity.auth.getCurrentUser();
-                            Fragment ProfileFragment = new ProfileFragment();
-                            FragmentManager fragmentManager = mainActivity.getSupportFragmentManager();
-                            fragmentManager.beginTransaction().replace(R.id.ProfileFragmentConteiner, ProfileFragment).remove(RegistrationFragment.this).commit();
+                            mainActivity.Auth();
                         }else {
                             Toast.makeText(getContext(),"Что-то пошло не так при создании аккаунта",Toast.LENGTH_SHORT).show();
                         }

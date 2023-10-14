@@ -72,6 +72,7 @@
             app:startIconDrawable="@drawable/mail24px"
             app:startIconContentDescription="fddsa">
             <EditText
+                android:id="@+id/AuthEmailEditText"
                 android:layout_width="match_parent"
                 android:textSize="13dp"
                 android:inputType="text"
@@ -96,6 +97,7 @@
             app:startIconDrawable="@drawable/lock24px"
             app:startIconContentDescription="fddsa">
             <EditText
+                android:id="@+id/AuthPasswordEditText"
                 android:textSize="13dp"
                 android:layout_width="match_parent"
                 android:fontFamily="@font/montserrat_regular"

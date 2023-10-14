@@ -13,14 +13,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.AniDeko.anidekoandroid.MainActivity;
 import com.AniDeko.anidekoandroid.R;
 import com.AniDeko.anidekoandroid.ui.Registration.RegistrationFragment;
 import com.AniDeko.anidekoandroid.ui.home.HomeFragment;
+import com.AniDeko.anidekoandroid.ui.profile.ProfileFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.transition.MaterialSharedAxis;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,10 +37,12 @@ import com.google.android.material.transition.MaterialSharedAxis;
 public class AuthFragment extends Fragment {
 
 
+    MainActivity mainActivity;
     FloatingActionButton SettingsButton;
     Button AuthButton;
     TextView SkipButton,LosePasswordButton,RegistrationButton;
     CardView AuthWithGoogleButton;
+    EditText AuthPasswordEditText,AuthEmailEditText;
     public AuthFragment() {
         // Required empty public constructor
     }
@@ -68,7 +77,34 @@ public class AuthFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
+        //инициализация компонентов
+        mainActivity = (MainActivity) getActivity();
+        AuthPasswordEditText = view.findViewById(R.id.AuthPasswordEditText);
+        AuthEmailEditText = view.findViewById(R.id.AuthEmailEditText);
 
+
+        //Кнопка аутентификации
+        AuthButton = view.findViewById(R.id.AuthButton);
+        AuthButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Запуск фукнкции аутентификации
+                mainActivity.auth.signInWithEmailAndPassword(AuthEmailEditText.getText().toString().toLowerCase(),AuthPasswordEditText.getText().toString())
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    mainActivity.Auth();
+                                } else {
+                                    Toast.makeText(getContext(), "Ошибка аутентификации",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+            }
+        });
+
+        //Кнопка перехода к регистрации
         RegistrationButton = view.findViewById(R.id.RegistrationButton);
         RegistrationButton.setOnClickListener(new View.OnClickListener() {
             @Override
