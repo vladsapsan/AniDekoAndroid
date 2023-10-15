@@ -51,7 +51,7 @@ public class RegistrationFragment extends Fragment {
         //Анимация
         progressBarRegistration.setVisibility(View.VISIBLE);
         //Инициализация данных
-        User user = new User(email, name,false);
+        User user = new User(email, name,"","","",false,false);
         mainActivity.DataBaseInit();
         //Запрос создания данных о пользователе
         mainActivity.auth.createUserWithEmailAndPassword(EmailRegistrationEditText.getText().toString(), PasswordRegistrationEditText.getText().toString())

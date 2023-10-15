@@ -12,7 +12,7 @@ public class User {
     //Для успешной обработки данных, обязательно модификатор public
     public String NickName;
     public String Email;
-    public String UserStatus;
+    public String userStatus;
     public Boolean isVerifeid;
     public Boolean isBanned;
     public String PhotoUri;
@@ -37,6 +37,17 @@ public class User {
         this.PhotoUri = PhotoUri;
         this.SecondPhotoUri = SecondPhotoUri;
 
+    }
+
+    //Полный конструктор
+    public User(String Nickname,String Email,String PhotoUri,String userStatus,String SecondPhotoUri,Boolean isBanned,Boolean isVerifeid){
+        this.NickName = Nickname;
+        this.Email = Email;
+        this.PhotoUri = PhotoUri;
+        this.SecondPhotoUri = SecondPhotoUri;
+        this.userStatus = userStatus;
+        this.isBanned = isBanned;
+        this.isVerifeid = isVerifeid;
     }
 
 

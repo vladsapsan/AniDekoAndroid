@@ -2,11 +2,16 @@ package com.AniDeko.anidekoandroid;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
+import com.AniDeko.anidekoandroid.DataStructure.User;
 import com.AniDeko.anidekoandroid.ui.Auth.AuthFragment;
 import com.AniDeko.anidekoandroid.ui.home.HomeFragment;
 import com.AniDeko.anidekoandroid.ui.profile.ProfileFragment;
 import com.AniDeko.anidekoandroid.ui.trends.TrendsFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
@@ -21,6 +26,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.AniDeko.anidekoandroid.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -39,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView navView;
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = null;
+    public User cUserInfo;
 
 
     @Override
@@ -108,9 +115,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    //Инициализируем бд
     public void DataBaseInit(){
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
+
 
     public void Auth(){
         //Пробуем авторизоваться

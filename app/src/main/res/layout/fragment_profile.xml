@@ -33,6 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
+                android:background="@color/MainWhite"
                 android:id="@+id/SeconsPhotoProfile"
                 android:layout_width="match_parent"
                 android:scaleType="centerCrop"
@@ -45,6 +46,7 @@
                 android:layout_gravity="bottom"
                 android:layout_height="wrap_content">
                 <com.google.android.material.card.MaterialCardView
+                    android:layout_marginTop="5dp"
                     android:layout_width="100dp"
                     app:strokeWidth="0dp"
                     app:strokeColor="@color/MainWhite"
@@ -55,7 +57,16 @@
                         android:id="@+id/PhotoProfile"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@color/MainWhite"
                         android:scaleType="centerCrop"/>
+                    <ProgressBar
+                        android:visibility="gone"
+                        android:id="@+id/progressBarProfile"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_gravity="center"
+                        android:indeterminateTint="@color/MainBlue"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp" />
                 </com.google.android.material.card.MaterialCardView>
 
 
@@ -92,7 +103,15 @@
                             android:textColor="@color/MainWhite"
                             android:text="Имя Пользователя"/>
                         <ImageView
-                            android:layout_marginLeft="6dp"
+                            android:id="@+id/IsverifiedIcon"
+                            android:visibility="gone"
+                            android:layout_marginLeft="1dp"
+                            android:layout_gravity="center"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/verified24px"/>
+                        <ImageView
+                            android:layout_marginLeft="8dp"
                             android:layout_gravity="center"
                             android:layout_width="18dp"
                             android:layout_height="18dp"

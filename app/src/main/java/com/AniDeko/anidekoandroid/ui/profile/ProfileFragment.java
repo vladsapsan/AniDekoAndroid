@@ -11,23 +11,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.AniDeko.anidekoandroid.DataStructure.User;
 import com.AniDeko.anidekoandroid.MainActivity;
 import com.AniDeko.anidekoandroid.ui.Auth.AuthFragment;
 import com.AniDeko.anidekoandroid.R;
 import com.AniDeko.anidekoandroid.ui.Settings.SettingsFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.transition.MaterialFadeThrough;
 import com.google.android.material.transition.MaterialSharedAxis;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 
 
 public class ProfileFragment extends Fragment {
 
     MainActivity mainActivity;
+    ImageView IsverifiedIcon;
     TextView UserNameTextView,UserStatusTextView;
-    FirebaseUser CurrentUser;
+    User cUserInfo;
+    ProgressBar progressBarProfile;
     FloatingActionButton SettingsButton;
     SettingsFragment settingsFragment;
 
@@ -41,7 +50,41 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+    }
 
+
+    private void LoadProfile(){
+        if(cUserInfo!=null) {
+            if (cUserInfo.NickName != null) {
+                UserNameTextView.setText(cUserInfo.NickName);
+            }
+            if (cUserInfo.isVerifeid == true) {
+                IsverifiedIcon.setVisibility(View.VISIBLE);
+            }
+            if(cUserInfo.userStatus!=""){
+                UserStatusTextView.setText(cUserInfo.userStatus);
+            }
+        }
+    }
+
+    //Получение данных пользователя
+    public void LoadUserInfo(){
+        progressBarProfile.setVisibility(View.VISIBLE);
+        //Инициализируем бд
+        mainActivity.DataBaseInit();
+        mainActivity.mDatabase.child(mainActivity.Users_Child).child(mainActivity.currentUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(task.isSuccessful()){
+                    //Данные аккаунта успешно получены
+                    cUserInfo = task.getResult().getValue(User.class);
+                    LoadProfile();
+                    progressBarProfile.setVisibility(View.GONE);
+                }else {
+                    Toast.makeText(getActivity(), "Ошибка загрузки профиля", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override
@@ -60,18 +103,17 @@ public class ProfileFragment extends Fragment {
         //Получаем данные из Mainactivity
         mainActivity = (MainActivity) getActivity();
         UserNameTextView = view.findViewById(R.id.UserNameTextView);
-
+        IsverifiedIcon = view.findViewById(R.id.IsverifiedIcon);
+        UserStatusTextView = view.findViewById(R.id.UserStatusTextView);
+        progressBarProfile = view.findViewById(R.id.progressBarProfile);
 
         if(mainActivity.currentUser==null){
             mainActivity.Auth();
         }else{
-            CurrentUser = mainActivity.currentUser;
             setExitTransition(new MaterialFadeThrough());
             setEnterTransition(new MaterialFadeThrough());
             setReenterTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
-            if(CurrentUser.getDisplayName()!=null) {
-                UserNameTextView.setText(mainActivity.currentUser.getDisplayName());
-            }
+            LoadUserInfo();
         }
 
 
