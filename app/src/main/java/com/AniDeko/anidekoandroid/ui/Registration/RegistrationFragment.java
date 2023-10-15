@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,9 +39,10 @@ import java.util.regex.Pattern;
 public class RegistrationFragment extends Fragment {
 
     ImageView BackButton;
-    Button finishRegistrationButton;
+    CardView finishRegistrationButton;
     MainActivity mainActivity;
     EditText PasswordRegistrationEditText,EmailRegistrationEditText,NickNameRegistrationEditText;
+    ProgressBar progressBarRegistration;
 
     public RegistrationFragment() {
         // Required empty public constructor
@@ -82,7 +85,7 @@ public class RegistrationFragment extends Fragment {
         PasswordRegistrationEditText = view.findViewById(R.id.PasswordRegistrationEditText);
         EmailRegistrationEditText = view.findViewById(R.id.EmailRegistrationEditText);
         NickNameRegistrationEditText = view.findViewById(R.id.NickNameRegistrationEditText);
-
+        progressBarRegistration = view.findViewById(R.id.progressBarRegistration);
 
 
 
@@ -91,23 +94,26 @@ public class RegistrationFragment extends Fragment {
         finishRegistrationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(EmailRegistrationEditText.getText().length()!=0){}
-                mainActivity.auth.createUserWithEmailAndPassword(EmailRegistrationEditText.getText().toString(),PasswordRegistrationEditText.getText().toString())
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            //Добавляем никнейм в базу
-                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                    .setDisplayName(NickNameRegistrationEditText.getText().toString())
-                                    .build();
-                            mainActivity.auth.getCurrentUser().updateProfile(profileUpdates);
-                            mainActivity.Auth();
-                        }else {
-                            Toast.makeText(getContext(),"Что-то пошло не так при создании аккаунта",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                if(EmailRegistrationEditText.getText().length()!=0) {
+                    progressBarRegistration.setVisibility(View.VISIBLE);
+                    mainActivity.auth.createUserWithEmailAndPassword(EmailRegistrationEditText.getText().toString(), PasswordRegistrationEditText.getText().toString())
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        //Добавляем никнейм в базу
+                                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                .setDisplayName(NickNameRegistrationEditText.getText().toString())
+                                                .build();
+                                        mainActivity.auth.getCurrentUser().updateProfile(profileUpdates);
+                                        mainActivity.Auth();
+                                    } else {
+                                        Toast.makeText(getContext(), "Что-то пошло не так при создании аккаунта", Toast.LENGTH_SHORT).show();
+                                        progressBarRegistration.setVisibility(View.GONE);
+                                    }
+                                }
+                            });
+                }
             }
         });
 

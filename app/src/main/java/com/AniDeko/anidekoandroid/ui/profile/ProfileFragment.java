@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.AniDeko.anidekoandroid.MainActivity;
 import com.AniDeko.anidekoandroid.ui.Auth.AuthFragment;
 import com.AniDeko.anidekoandroid.R;
+import com.AniDeko.anidekoandroid.ui.Settings.SettingsFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.transition.MaterialFadeThrough;
 import com.google.android.material.transition.MaterialSharedAxis;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,24 +26,22 @@ import com.google.firebase.auth.FirebaseUser;
 public class ProfileFragment extends Fragment {
 
     MainActivity mainActivity;
-    Button ExitFromAccButton;
     TextView UserNameTextView,UserStatusTextView;
     FirebaseUser CurrentUser;
+    FloatingActionButton SettingsButton;
+    SettingsFragment settingsFragment;
 
     public ProfileFragment() {
         // Required empty public constructor
     }
 
-    public static ProfileFragment newInstance(String param1, String param2) {
-        ProfileFragment fragment = new ProfileFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
     }
 
     @Override
@@ -54,39 +54,43 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+
         //Получаем данные из Mainactivity
         mainActivity = (MainActivity) getActivity();
         UserNameTextView = view.findViewById(R.id.UserNameTextView);
-        //Проверка авторизации
-        if(mainActivity.UserisSign==false){
-            //Открытие окна авторизации если пользователь не авторизован
-            AuthFragment AuthFragment = new AuthFragment();
-             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.ProfileFragmentConteiner, AuthFragment, "Auth").commit();
-        }else {
+
+
+        if(mainActivity.currentUser==null){
+            mainActivity.Auth();
+        }else{
+            CurrentUser = mainActivity.currentUser;
             setExitTransition(new MaterialFadeThrough());
             setEnterTransition(new MaterialFadeThrough());
-
+            setReenterTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
+            if(CurrentUser.getDisplayName()!=null) {
+                UserNameTextView.setText(mainActivity.currentUser.getDisplayName());
+            }
         }
 
-        //Кнопка выхода из профиля
-        ExitFromAccButton = view.findViewById(R.id.ExitFromAccButton);
-        ExitFromAccButton.setOnClickListener(new View.OnClickListener() {
+
+
+        //Кнопка настроек
+        SettingsButton = view.findViewById(R.id.SettingsButton);
+        SettingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivity.auth.signOut();
-                mainActivity.Auth();
+                settingsFragment = new SettingsFragment();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.ProfileFragmentConteiner, settingsFragment, "Settings").addToBackStack("SettingsBack").commit();
             }
         });
+
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        if(mainActivity.currentUser!=null){
-            CurrentUser = mainActivity.currentUser;
-            if(CurrentUser.getDisplayName()!=null) {
-                UserNameTextView.setText(mainActivity.currentUser.getDisplayName());
-            }
-        }
     }
 }

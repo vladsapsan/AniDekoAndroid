@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     public  FirebaseUser currentUser;
     ProfileFragment ProfileFragment;
     HomeFragment homeFragment;
+    AuthFragment AuthFragment;
     TrendsFragment TrendsFragment;
     BottomNavigationView navView;
     final FragmentManager fm = getSupportFragmentManager();
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         TrendsFragment = new TrendsFragment();
         ProfileFragment = new ProfileFragment();
         setFragment(homeFragment, "1", 1);
+
 
 
         //Инициализация при создании
@@ -105,19 +107,15 @@ public class MainActivity extends AppCompatActivity {
         //Пробуем авторизоваться
         currentUser = auth.getCurrentUser();
         if(currentUser != null){
-            UserisSign = true;
             if(getSupportFragmentManager().findFragmentByTag("Auth")!=null) {
-                fm.beginTransaction().remove(ProfileFragment).commit();
+                getSupportFragmentManager().beginTransaction().remove(ProfileFragment).remove(AuthFragment).commit();
                 ProfileFragment = new ProfileFragment();
                 setFragment(homeFragment, "1", 1);
             }
-        }else {
-            UserisSign = false;
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            if(fragmentManager.findFragmentByTag("3")!=null) {
-                AuthFragment AuthFragment = new AuthFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.ProfileFragmentConteiner, AuthFragment, "Auth").commit();
+        }else{
+            if(getSupportFragmentManager().findFragmentByTag("3")!=null) {
+                AuthFragment = new AuthFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.ProfileFragmentConteiner, AuthFragment, "Auth").commit();
             }
         }
     }

@@ -36,7 +36,6 @@
                 android:id="@+id/SeconsPhotoProfile"
                 android:layout_width="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/sceletonpictures"
                 android:layout_height="130dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -55,7 +54,6 @@
                     <ImageView
                         android:id="@+id/PhotoProfile"
                         android:layout_width="match_parent"
-                        android:src="@drawable/imagedecor"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"/>
                 </com.google.android.material.card.MaterialCardView>
@@ -65,7 +63,7 @@
                     android:clickable="true"
                     app:rippleColor="@color/MainWhiteTransparent"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="34dp"
                     android:layout_marginRight="8dp"
                     app:strokeWidth="0dp"
                     android:layout_width="wrap_content"
@@ -116,24 +114,7 @@
             </LinearLayout>
         </FrameLayout>
 
-        <Button
-            android:id="@+id/ExitFromAccButton"
-            android:backgroundTint="@color/MainWhite"
-            app:icon="@drawable/start24px"
-            app:iconTint="@color/MainRed"
-            android:textColor="@color/MainRed"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:fontFamily="@font/montserrat_semi_bold"
-            android:elevation="10dp"
-            android:translationZ="10dp"
-            android:stateListAnimator="@null"
-            android:textSize="14dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:text="@string/ExitProfile"/>
+
     </LinearLayout>
 </FrameLayout>
 </FrameLayout>

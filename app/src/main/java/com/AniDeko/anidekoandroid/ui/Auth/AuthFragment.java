@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +39,8 @@ public class AuthFragment extends Fragment {
 
 
     MainActivity mainActivity;
-    Button AuthButton;
+    CardView AuthButton;
+    ProgressBar progressBarAuth;
     TextView SkipButton,LosePasswordButton,RegistrationButton;
     CardView AuthWithGoogleButton;
     EditText AuthPasswordEditText,AuthEmailEditText;
@@ -80,26 +82,30 @@ public class AuthFragment extends Fragment {
         mainActivity = (MainActivity) getActivity();
         AuthPasswordEditText = view.findViewById(R.id.AuthPasswordEditText);
         AuthEmailEditText = view.findViewById(R.id.AuthEmailEditText);
-
+        progressBarAuth = view.findViewById(R.id.progressBarAuth);
 
         //Кнопка аутентификации
         AuthButton = view.findViewById(R.id.AuthButton);
         AuthButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Запуск фукнкции аутентификации
-                mainActivity.auth.signInWithEmailAndPassword(AuthEmailEditText.getText().toString().toLowerCase(),AuthPasswordEditText.getText().toString())
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    mainActivity.Auth();
-                                } else {
-                                    Toast.makeText(getContext(), "Ошибка аутентификации",
-                                            Toast.LENGTH_SHORT).show();
+                if (AuthEmailEditText.getText().length() > 0 && AuthPasswordEditText.getText().length() > 0) {
+                    progressBarAuth.setVisibility(View.VISIBLE);
+                    //Запуск фукнкции аутентификации
+                    mainActivity.auth.signInWithEmailAndPassword(AuthEmailEditText.getText().toString().toLowerCase(), AuthPasswordEditText.getText().toString())
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        mainActivity.Auth();
+                                    } else {
+                                        Toast.makeText(getContext(), "Ошибка аутентификации",
+                                                Toast.LENGTH_SHORT).show();
+                                        progressBarAuth.setVisibility(View.GONE);
+                                    }
                                 }
-                            }
-                        });
+                            });
+                }
             }
         });
 
