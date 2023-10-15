@@ -21,6 +21,8 @@ import androidx.navigation.ui.NavigationUI;
 import com.AniDeko.anidekoandroid.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,10 +33,13 @@ public class MainActivity extends AppCompatActivity {
     ProfileFragment ProfileFragment;
     HomeFragment homeFragment;
     AuthFragment AuthFragment;
+    public final static String Users_Child = "Users";
     TrendsFragment TrendsFragment;
+    public DatabaseReference mDatabase;
     BottomNavigationView navView;
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +107,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    public void DataBaseInit(){
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+    }
 
     public void Auth(){
         //Пробуем авторизоваться

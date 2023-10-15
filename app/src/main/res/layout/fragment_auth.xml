@@ -67,7 +67,7 @@
                 android:textSize="13dp"
                 android:inputType="text"
                 android:fontFamily="@font/montserrat_regular"
-                android:hint="Email или никнейм"
+                android:hint="Email"
                 android:layout_height="match_parent"/>
     </com.google.android.material.textfield.TextInputLayout>
 

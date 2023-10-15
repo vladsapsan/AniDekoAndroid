@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.AniDeko.anidekoandroid.DataStructure.User;
 import com.AniDeko.anidekoandroid.MainActivity;
 import com.AniDeko.anidekoandroid.R;
 import com.AniDeko.anidekoandroid.ui.Auth.AuthFragment;
@@ -30,6 +31,7 @@ import com.google.android.material.transition.MaterialSharedAxis;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
 
 import org.w3c.dom.Text;
 
@@ -38,15 +40,55 @@ import java.util.regex.Pattern;
 
 public class RegistrationFragment extends Fragment {
 
-    ImageView BackButton;
+    ImageView BackToAuthButton;
     CardView finishRegistrationButton;
     MainActivity mainActivity;
     EditText PasswordRegistrationEditText,EmailRegistrationEditText,NickNameRegistrationEditText;
     ProgressBar progressBarRegistration;
 
+    //Запиьс данных
+    public void writeNewUser(String name, String email) {
+        //Анимация
+        progressBarRegistration.setVisibility(View.VISIBLE);
+        //Инициализация данных
+        User user = new User(email, name,false);
+        mainActivity.DataBaseInit();
+        //Запрос создания данных о пользователе
+        mainActivity.auth.createUserWithEmailAndPassword(EmailRegistrationEditText.getText().toString(), PasswordRegistrationEditText.getText().toString())
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            //Добавляем данные о пользователе в базу
+                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                    .setDisplayName(NickNameRegistrationEditText.getText().toString())
+                                    .build();
+                            mainActivity.auth.getCurrentUser().updateProfile(profileUpdates);
+                            //Запрос на добавление данных в бд
+                            mainActivity.mDatabase.child(MainActivity.Users_Child).child(mainActivity.auth.getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        //Все прошло успешно, загружаем профиль
+                                        mainActivity.Auth();
+                                    }else {
+                                        Toast.makeText(getContext(), "Ошибка загрузки данных...", Toast.LENGTH_SHORT).show();
+                                        progressBarRegistration.setVisibility(View.GONE);
+                                    }
+                                }
+                            });
+                        } else {
+                            Toast.makeText(getContext(), "Что-то пошло не так при создании аккаунта...", Toast.LENGTH_SHORT).show();
+                            progressBarRegistration.setVisibility(View.GONE);
+                        }
+                    }
+                });
+    }
+
     public RegistrationFragment() {
         // Required empty public constructor
     }
+
 
     public static boolean isValidPassword(String s) {
         Pattern PASSWORD_PATTERN
@@ -95,34 +137,17 @@ public class RegistrationFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(EmailRegistrationEditText.getText().length()!=0) {
-                    progressBarRegistration.setVisibility(View.VISIBLE);
-                    mainActivity.auth.createUserWithEmailAndPassword(EmailRegistrationEditText.getText().toString(), PasswordRegistrationEditText.getText().toString())
-                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        //Добавляем никнейм в базу
-                                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                                .setDisplayName(NickNameRegistrationEditText.getText().toString())
-                                                .build();
-                                        mainActivity.auth.getCurrentUser().updateProfile(profileUpdates);
-                                        mainActivity.Auth();
-                                    } else {
-                                        Toast.makeText(getContext(), "Что-то пошло не так при создании аккаунта", Toast.LENGTH_SHORT).show();
-                                        progressBarRegistration.setVisibility(View.GONE);
-                                    }
-                                }
-                            });
+                    writeNewUser(EmailRegistrationEditText.getText().toString().toLowerCase(),NickNameRegistrationEditText.getText().toString());
                 }
             }
         });
 
         //Кнопка закрытия фрагмента??? не работает
-        BackButton = view.findViewById(R.id.BackToAuthButton);
-        BackButton.setOnClickListener(new View.OnClickListener() {
+        BackToAuthButton = view.findViewById(R.id.BackToAuthButton);
+        BackToAuthButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().getSupportFragmentManager().popBackStack();
+                mainActivity.getSupportFragmentManager().popBackStack();
             }
         });
     }
