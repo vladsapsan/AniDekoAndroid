@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -34,6 +35,7 @@ public class ProfileFragment extends Fragment {
 
     MainActivity mainActivity;
     ImageView IsverifiedIcon;
+    CardView CardProfileNameInfo;
     TextView UserNameTextView,UserStatusTextView;
     User cUserInfo;
     ProgressBar progressBarProfile;
@@ -107,6 +109,7 @@ public class ProfileFragment extends Fragment {
         UserStatusTextView = view.findViewById(R.id.UserStatusTextView);
         progressBarProfile = view.findViewById(R.id.progressBarProfile);
 
+
         if(mainActivity.currentUser==null){
             mainActivity.Auth();
         }else{
@@ -128,6 +131,15 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        CardProfileNameInfo = view.findViewById(R.id.CardProfileNameInfo);
+        CardProfileNameInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(IsverifiedIcon.getVisibility()==View.VISIBLE){
+                    Toast.makeText(getContext(),"Данный аккаунт верифицирован",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
 

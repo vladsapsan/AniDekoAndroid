@@ -71,6 +71,7 @@
 
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/CardProfileNameInfo"
                     android:clickable="true"
                     app:rippleColor="@color/MainWhiteTransparent"
                     android:layout_marginLeft="8dp"
@@ -101,7 +102,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/montserrat_semi_bold"
                             android:textColor="@color/MainWhite"
-                            android:text="Имя Пользователя"/>
+                            android:text=""/>
                         <ImageView
                             android:id="@+id/IsverifiedIcon"
                             android:visibility="gone"
@@ -127,12 +128,95 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_regular"
                         android:textColor="@color/MainWhite"
-                        android:text="основная подпись пользователя, его статус на главном экране"/>
+                        android:text=""/>
                 </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
         </FrameLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="16dp"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="left"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="80dp"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="8dp"
+                    app:strokeWidth="0dp"
+                    app:cardBackgroundColor="@color/MainWhite"
+                    android:layout_height="35dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:src="@drawable/add24px"
+                        android:layout_height="match_parent"/>
+                </com.google.android.material.card.MaterialCardView>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:gravity="right"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:id="@+id/UserCommentsNumber"
+                                android:textSize="12dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/montserrat_semi_bold"
+                                android:textColor="@color/MainWhite"
+                                android:text="0"/>
+                            <TextView
+                                android:textSize="12dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/montserrat_regular"
+                                android:textColor="@color/MainWhite"
+                                android:text="Комментарии"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="16dp"
+                            android:gravity="center"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:id="@+id/UserSubsNumber"
+                                android:textSize="12dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/montserrat_semi_bold"
+                                android:textColor="@color/MainWhite"
+                                android:text="0"/>
+                            <TextView
+                                android:textSize="12dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/montserrat_regular"
+                                android:textColor="@color/MainWhite"
+                                android:text="Подписчики"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </FrameLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 </FrameLayout>
