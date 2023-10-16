@@ -2,6 +2,7 @@ package com.AniDeko.anidekoandroid.ui.Settings;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -13,15 +14,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.AniDeko.anidekoandroid.DataStructure.User;
 import com.AniDeko.anidekoandroid.MainActivity;
@@ -44,11 +48,12 @@ public class SettingsFragment extends Fragment {
 
     private static final int SELECT_PICTURE = 1;
     ProgressBar progressBar;
+    boolean isAvatar = false;
     Button ExitFromAccButton;
     MainActivity mainActivity;
     EditText EditTextPerson;
     Bundle UserInfoBunlde;
-    ImageView UserPhoto;
+    ImageView UserPhoto,UserCover;
     User cUserInfo;
     BottomSheetDialog bottomSheetDialog;
     LinearLayout EditAvatarProfileButton,EditStatusProfileButton,EditCoverProfileButton,EditNickNameProfileButton;
@@ -65,7 +70,16 @@ public class SettingsFragment extends Fragment {
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_PICTURE) {
                 Uri selectedImageUri = data.getData();
-                UserPhoto.setImageURI(selectedImageUri);
+                if(getMimeType(selectedImageUri).toLowerCase().contains("jpeg")||getMimeType(selectedImageUri).toLowerCase().contains("png")){
+                    if(isAvatar==true) {
+                        UserPhoto.setImageURI(selectedImageUri);
+                    }else {
+                        UserCover.setImageURI(selectedImageUri);
+                    }
+                }
+                else{
+                    Toast.makeText(getContext(),"Выбран файл неподдерживаемого формата",Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }
@@ -76,6 +90,22 @@ public class SettingsFragment extends Fragment {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
+    }
+
+
+    //Получение расширения файла
+    public String getMimeType(Uri uri) {
+        String mimeType;
+        if (uri.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
+            ContentResolver cr = getActivity().getContentResolver();
+            mimeType = cr.getType(uri);
+        } else {
+            String fileExtension = MimeTypeMap.getFileExtensionFromUrl(uri
+                    .toString());
+            mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(
+                    fileExtension.toLowerCase());
+        }
+        return mimeType;
     }
 
     public static SettingsFragment newInstance(String param1, String param2) {
@@ -97,7 +127,12 @@ public class SettingsFragment extends Fragment {
     }
 
     private byte[] GetByteFromPhoto(){
-        Drawable photo = UserPhoto.getDrawable();
+        Drawable photo;
+        if(isAvatar==true){
+             photo = UserPhoto.getDrawable();
+        }else {
+             photo = UserCover.getDrawable();
+        }
         Bitmap PhotoPreviewBitMap = ((BitmapDrawable) photo).getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
@@ -177,6 +212,7 @@ public class SettingsFragment extends Fragment {
         EditPhotoProfileDialog.findViewById(R.id.CardUserAvatar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                isAvatar=true;
                 GetImage();
             }
         });
@@ -236,6 +272,79 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        //Редактирование обложки
+        View EditCoverProfileDialog = LayoutInflater.from(getContext())
+                .inflate(
+                        R.layout.bottom_sheet_dialog_edit_cover_profile,
+                        (FrameLayout) view.findViewById(R.id.SheetDialogEditCoverProfileContainer)
+                );
+        UserCover = EditCoverProfileDialog.findViewById(R.id.UserCoverDownload);
+        if(cUserInfo.SecondPhotoUri!=null){
+            Glide.with(getActivity()).load(cUserInfo.SecondPhotoUri).into(UserCover);
+        }
+        EditCoverProfileDialog.findViewById(R.id.CardUserCover).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isAvatar=false;
+                GetImage();
+            }
+        });
+        EditCoverProfileDialog.findViewById(R.id.SaveAvatarButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (UserCover != null) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    if (mainActivity.storageReference == null) {
+                        mainActivity.StorageInit();
+                    }
+                    UploadTask uploadTaskPhoto = mainActivity.storageReference.child(mainActivity.Users_Child).child(mainActivity.currentUser.getUid()).child("SecondPhotoUri").putBytes(GetByteFromPhoto());
+                    uploadTaskPhoto.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                            if(task.isSuccessful()){
+
+                            }else {
+                                progressBar.setVisibility(View.GONE);
+                                Snackbar.make(view,"Ошибка загрузки обложки", Snackbar.LENGTH_SHORT).setBackgroundTint(getResources().getColor(R.color.MainWhite)).setTextColor(getResources().getColor(R.color.MainBlack)).show();
+                            }
+                        }
+                    });
+                    Task<Uri> taskPhoto = uploadTaskPhoto.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                        @Override
+                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                            return mainActivity.storageReference.child(mainActivity.Users_Child).child(mainActivity.currentUser.getUid()).child("SecondPhotoUri").getDownloadUrl();
+                        }
+                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            if(task.isSuccessful()){
+                                mainActivity.mDatabase.child(mainActivity.Users_Child).child(mainActivity.currentUser.getUid()).child("SecondPhotoUri").setValue(task.getResult().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            //Обложка загружена
+                                            bottomSheetDialog.dismiss();
+                                            UpdateUserProfile();
+                                            progressBar.setVisibility(View.GONE);
+                                        }else {
+                                            progressBar.setVisibility(View.GONE);
+                                            Snackbar.make(view,"Ошибка #3 загрузки обложки ", Snackbar.LENGTH_SHORT).setBackgroundTint(getResources().getColor(R.color.MainWhite)).setTextColor(getResources().getColor(R.color.MainBlack)).show();
+                                        }
+                                    }
+                                });
+                            }else {
+                                progressBar.setVisibility(View.GONE);
+                                Snackbar.make(view,"Ошибка #2 загрузки обложки ", Snackbar.LENGTH_SHORT).setBackgroundTint(getResources().getColor(R.color.MainWhite)).setTextColor(getResources().getColor(R.color.MainBlack)).show();
+                            }
+                        }
+                    });
+
+                }else {
+                    Snackbar.make(view,"Обложка не выбрана", Snackbar.LENGTH_SHORT).setBackgroundTint(getResources().getColor(R.color.MainWhite)).setTextColor(getResources().getColor(R.color.MainBlack)).show();
+                }
+            }
+        });
+
         //Кнопка редактирования аватара
         EditAvatarProfileButton = view.findViewById(R.id.EditAvatarProfileButton);
         EditAvatarProfileButton.setOnClickListener(new View.OnClickListener() {
@@ -254,6 +363,16 @@ public class SettingsFragment extends Fragment {
             public void onClick(View view) {
                 progressBar = EditStatusProfileDialog.findViewById(R.id.progressBar);
                 bottomSheetDialog.setContentView(EditStatusProfileDialog);
+                bottomSheetDialog.show();
+            }
+        });
+
+        EditCoverProfileButton = view.findViewById(R.id.EditCoverProfileButton);
+        EditCoverProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                progressBar = EditCoverProfileDialog.findViewById(R.id.progressBar);
+                bottomSheetDialog.setContentView(EditCoverProfileDialog);
                 bottomSheetDialog.show();
             }
         });

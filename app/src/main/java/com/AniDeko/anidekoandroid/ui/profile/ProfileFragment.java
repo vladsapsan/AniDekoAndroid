@@ -1,6 +1,8 @@
 package com.AniDeko.anidekoandroid.ui.profile;
 
+import android.content.ContentResolver;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -45,13 +48,13 @@ import kotlin.Pair;
 public class ProfileFragment extends Fragment {
 
     MainActivity mainActivity;
-    ImageView IsverifiedIcon,PhotoProfile;
+    ImageView IsverifiedIcon,PhotoProfile,SeconsPhotoProfile;
     CardView CardProfileNameInfo;
     TextView UserNameTextView,UserStatusTextView;
     public final static String Bunlde_UserInfo_Tag = "UserInfo";
     User cUserInfo;
     Bundle UserInfoBundle;
-    ProgressBar progressBarProfile;
+    ProgressBar progressBarProfile,progressBarCoverPhoto;
     FloatingActionButton SettingsButton;
     SettingsFragment settingsFragment;
 
@@ -93,13 +96,30 @@ public class ProfileFragment extends Fragment {
                     }
                 }).into(PhotoProfile);
             }
+            if(cUserInfo.SecondPhotoUri!=null){
+                Glide.with(getActivity()).load(cUserInfo.SecondPhotoUri).listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, @Nullable Object model, @NonNull Target<Drawable> target, boolean isFirstResource) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(@NonNull Drawable resource, @NonNull Object model, Target<Drawable> target, @NonNull DataSource dataSource, boolean isFirstResource) {
+                        progressBarCoverPhoto.setVisibility(View.GONE);
+                        return false;
+                    }
+                }).into(SeconsPhotoProfile);
+            }
         }
     }
+
+
+
 
     //Получение данных пользователя
     public void LoadUserInfo(){
         progressBarProfile.setVisibility(View.VISIBLE);
-
+        progressBarCoverPhoto.setVisibility(View.VISIBLE);
         //Инициализируем бд
         mainActivity.DataBaseInit();
         mainActivity.mDatabase.child(mainActivity.Users_Child).child(mainActivity.currentUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -140,7 +160,9 @@ public class ProfileFragment extends Fragment {
         IsverifiedIcon = view.findViewById(R.id.IsverifiedIcon);
         UserStatusTextView = view.findViewById(R.id.UserStatusTextView);
         progressBarProfile = view.findViewById(R.id.progressBarProfile);
+        progressBarCoverPhoto = view.findViewById(R.id.progressBarCoverPhoto);
         PhotoProfile = view.findViewById(R.id.PhotoProfile);
+        SeconsPhotoProfile = view.findViewById(R.id.SeconsPhotoProfile);
 
         if(mainActivity.currentUser==null){
             mainActivity.Auth();
@@ -157,9 +179,11 @@ public class ProfileFragment extends Fragment {
         SettingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                settingsFragment = new SettingsFragment();
-                SetIntelizationBundle(settingsFragment);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.ProfileFragmentConteiner, settingsFragment, "Settings").addToBackStack("SettingsBack").commit();
+                if(cUserInfo!=null) {
+                    settingsFragment = new SettingsFragment();
+                    SetIntelizationBundle(settingsFragment);
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.ProfileFragmentConteiner, settingsFragment, "Settings").addToBackStack("SettingsBack").commit();
+                }
             }
         });
 

@@ -1,8 +1,11 @@
 package com.AniDeko.anidekoandroid;
 
+import android.content.ContentResolver;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import com.AniDeko.anidekoandroid.DataStructure.User;
