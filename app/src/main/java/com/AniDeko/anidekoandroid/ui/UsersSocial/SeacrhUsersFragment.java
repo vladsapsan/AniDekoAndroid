@@ -167,7 +167,8 @@ public class SeacrhUsersFragment extends Fragment implements UserListItemProfile
     public void onItemClick(View view, int position) {
         //Передача ID аккаунта и запуск фрагмента
         Bundle UserIDBundle = new Bundle();
-        UserIDBundle.putString(Bunlde_UserID_Tag,UserslistTemp.get(position).ID);
+
+        UserIDBundle.putString(Bunlde_UserID_Tag,userListItemProfileAdapter.getItem(position).ID);
 
         SocialProfileUserFragment SocialProfileUserFragment = new SocialProfileUserFragment();
         SocialProfileUserFragment.setArguments(UserIDBundle);
@@ -175,6 +176,6 @@ public class SeacrhUsersFragment extends Fragment implements UserListItemProfile
         SocialProfileUserFragment.setEnterTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
         SocialProfileUserFragment.setReturnTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
 
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.SearchUsersFragmentConteiner, SocialProfileUserFragment, UserslistTemp.get(position).ID).addToBackStack(null).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.SearchUsersFragmentConteiner, SocialProfileUserFragment, userListItemProfileAdapter.getItem(position).ID).addToBackStack(null).commit();
     }
 }
