@@ -6,9 +6,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_dark_logo"
+        android:icon="@mipmap/ic_main_logo"
         android:label="AniDeko"
-        android:roundIcon="@mipmap/ic_dark_logo_round"
+        android:roundIcon="@mipmap/ic_main_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AniDekoAndroid"
         tools:targetApi="31">
