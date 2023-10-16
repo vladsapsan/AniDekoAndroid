@@ -7,8 +7,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 
+import java.io.Serializable;
+
 //Типизация отправки данных о пользователях
-public class User {
+public class User implements Serializable {
     //Для успешной обработки данных, обязательно модификатор public
     public String NickName;
     public String Email;

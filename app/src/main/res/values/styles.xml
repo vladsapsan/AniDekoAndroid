@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="BottomSheetDialog" parent="Theme.Material3.Light.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+    <style name="ModalBottomSheet" parent="Theme.Material3.Light.BottomSheetDialog">
+        <!-- Apply attributes here -->
     </style>
 
-    <style name="BottomSheetStyle" parent="Widget.Material3.BottomSheet.Modal">
-        <item name="android:background">@android:color/transparent</item>
+    <style name="ModalBottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/ModalBottomSheet</item>
     </style>
 
     //Стиль всего приложения тобишь главного менй активити
     <style name="Theme" parent="Theme.Material3.Light.NoActionBar">
         <item name="android:windowBackground">@color/MainBlack</item>
         <item name="bottomAppBarStyle">@color/MainBlack</item>
+
+        <item name="bottomSheetDialogTheme">@style/ModalBottomSheetDialog</item>
 
         //Верхнее statusbar
         <item name="android:windowTranslucentStatus">true</item>

@@ -9,9 +9,14 @@
     <string name="LosePassword">Забыли пароль?</string>
     <string name="Skip">Пропустить</string>
     <string name="Enter">Войти</string>
+    <string name="Save">Сохранить</string>
     <string name="ExitProfile">Выйти из аккаунта</string>
     <string name="Registration">Регистрация</string>
     <string name="RegistrationText">Войдите или создайте профиль, чтобы открыть для себя полный функционал приложения</string>
     <string name="AgreeText">Нажимая кнопку продолжить, вы принимаете <a href='https://stackoverflow.com/'> пользовательское соглашение </a> и <a href='https://vk.com/'> правила сообщества </a></string>
     <string name="ProfileSettings">Настройки профиля</string>
+    <string name="EditProfileUserPhoto">Изменить аватарку профиля</string>
+    <string name="EditProfileUserNickName">Изменить никнейм</string>
+    <string name="EditProfileUserStatus">Изменить статус профиля</string>
+    <string name="EditProfileUserCover">Изменить обложку профиля</string>
 </resources>

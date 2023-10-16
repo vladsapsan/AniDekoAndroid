@@ -31,13 +31,20 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 
 
+import java.time.Duration;
+
+import kotlin.Pair;
+
+
 public class ProfileFragment extends Fragment {
 
     MainActivity mainActivity;
     ImageView IsverifiedIcon;
     CardView CardProfileNameInfo;
     TextView UserNameTextView,UserStatusTextView;
+    public final static String Bunlde_UserInfo_Tag = "UserInfo";
     User cUserInfo;
+    Bundle UserInfoBundle;
     ProgressBar progressBarProfile;
     FloatingActionButton SettingsButton;
     SettingsFragment settingsFragment;
@@ -72,6 +79,7 @@ public class ProfileFragment extends Fragment {
     //Получение данных пользователя
     public void LoadUserInfo(){
         progressBarProfile.setVisibility(View.VISIBLE);
+
         //Инициализируем бд
         mainActivity.DataBaseInit();
         mainActivity.mDatabase.child(mainActivity.Users_Child).child(mainActivity.currentUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -89,6 +97,11 @@ public class ProfileFragment extends Fragment {
         });
     }
 
+    private void SetIntelizationBundle(SettingsFragment fragment){
+        UserInfoBundle = new Bundle();
+        UserInfoBundle.putSerializable(Bunlde_UserInfo_Tag,cUserInfo);
+        fragment.setArguments(UserInfoBundle);
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -120,13 +133,13 @@ public class ProfileFragment extends Fragment {
         }
 
 
-
         //Кнопка настроек
         SettingsButton = view.findViewById(R.id.SettingsButton);
         SettingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 settingsFragment = new SettingsFragment();
+                SetIntelizationBundle(settingsFragment);
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.ProfileFragmentConteiner, settingsFragment, "Settings").addToBackStack("SettingsBack").commit();
             }
         });
