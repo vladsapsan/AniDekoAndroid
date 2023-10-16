@@ -15,6 +15,8 @@ public class User implements Serializable {
     public String NickName;
     public String Email;
     public String userStatus;
+
+    public String ID;
     public Boolean isVerifeid;
     public Boolean isBanned;
     public String PhotoUri;
@@ -42,7 +44,7 @@ public class User implements Serializable {
     }
 
     //Полный конструктор
-    public User(String Nickname,String Email,String PhotoUri,String userStatus,String SecondPhotoUri,Boolean isBanned,Boolean isVerifeid){
+    public User(String Nickname,String Email,String PhotoUri,String userStatus,String SecondPhotoUri,Boolean isBanned,Boolean isVerifeid,String ID){
         this.NickName = Nickname;
         this.Email = Email;
         this.PhotoUri = PhotoUri;
@@ -50,6 +52,7 @@ public class User implements Serializable {
         this.userStatus = userStatus;
         this.isBanned = isBanned;
         this.isVerifeid = isVerifeid;
+        this.ID = ID;
     }
 
 

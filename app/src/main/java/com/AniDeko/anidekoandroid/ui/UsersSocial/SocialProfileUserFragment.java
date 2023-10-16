@@ -1,21 +1,16 @@
-package com.AniDeko.anidekoandroid.ui.profile;
+package com.AniDeko.anidekoandroid.ui.UsersSocial;
 
-import android.content.ContentResolver;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,10 +18,8 @@ import android.widget.Toast;
 
 import com.AniDeko.anidekoandroid.DataStructure.User;
 import com.AniDeko.anidekoandroid.MainActivity;
-import com.AniDeko.anidekoandroid.ui.Auth.AuthFragment;
 import com.AniDeko.anidekoandroid.R;
-import com.AniDeko.anidekoandroid.ui.Settings.SettingsFragment;
-import com.AniDeko.anidekoandroid.ui.UsersSocial.SeacrhUsersFragment;
+import com.AniDeko.anidekoandroid.ui.profile.ProfileFragment;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -35,36 +28,25 @@ import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.transition.MaterialContainerTransform;
-import com.google.android.material.transition.MaterialFadeThrough;
-import com.google.android.material.transition.MaterialSharedAxis;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 
-
-import java.time.Duration;
-
-import kotlin.Pair;
+public class SocialProfileUserFragment extends Fragment {
 
 
-public class ProfileFragment extends Fragment {
 
     MainActivity mainActivity;
     ImageView IsverifiedIcon,PhotoProfile,SeconsPhotoProfile;
-    CardView CardProfileNameInfo;
-    TextView UserNameTextView,UserStatusTextView;
-    public final static String Bunlde_UserInfo_Tag = "UserInfo";
-    User cUserInfo;
-    Bundle UserInfoBundle;
     ProgressBar progressBarProfile,progressBarCoverPhoto;
-    FloatingActionButton SettingsButton,SearchButton;
-    SettingsFragment settingsFragment;
-    SeacrhUsersFragment searchUsersFragment;
-
-    public ProfileFragment() {
+    User cUserInfo;
+    String UserID;
+    CardView CardProfileNameInfo;
+    Bundle UserIDBunlde;
+    TextView UserNameTextView,UserStatusTextView;
+    FloatingActionButton BackToButton;
+    public SocialProfileUserFragment() {
         // Required empty public constructor
     }
-
 
 
     @Override
@@ -73,6 +55,14 @@ public class ProfileFragment extends Fragment {
 
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_social_profile_user, container, false);
+
+
+    }
 
     private void LoadProfile(){
         if(cUserInfo!=null) {
@@ -117,21 +107,16 @@ public class ProfileFragment extends Fragment {
             }else {
                 progressBarCoverPhoto.setVisibility(View.GONE);
             }
-            SettingsButton.show();
-            SearchButton.show();
         }
     }
 
-
-
-
     //Получение данных пользователя
-    public void LoadMyUserInfo(){
+    private void LoadUserInfo(String UserID){
         progressBarProfile.setVisibility(View.VISIBLE);
         progressBarCoverPhoto.setVisibility(View.VISIBLE);
         //Инициализируем бд
         mainActivity.DataBaseInit();
-        mainActivity.mDatabase.child(mainActivity.Users_Child).child(mainActivity.currentUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        mainActivity.mDatabase.child(mainActivity.Users_Child).child(UserID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if(task.isSuccessful()){
@@ -145,30 +130,19 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    private void SetIntelizationBundle(SettingsFragment fragment){
-        UserInfoBundle = new Bundle();
-        UserInfoBundle.putSerializable(Bunlde_UserInfo_Tag,cUserInfo);
-        fragment.setArguments(UserInfoBundle);
-    }
-    private void SearchFragmentInit(){
-        searchUsersFragment = new SeacrhUsersFragment();
-        searchUsersFragment.setEnterTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
-        searchUsersFragment.setReturnTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
-    }
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+    //Получение информации о пользователе из фрагмента профиля
+    private void GetBundleLoadInfoByID(){
+        UserIDBunlde = getArguments();
+        UserID = UserIDBunlde.getString(SeacrhUsersFragment.Bunlde_UserID_Tag);
+        if(UserID.length()>0) {
+            LoadUserInfo(UserID);
+        }
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-
-        //Получаем данные из Mainactivity
         mainActivity = (MainActivity) getActivity();
         UserNameTextView = view.findViewById(R.id.UserNameTextView);
         IsverifiedIcon = view.findViewById(R.id.IsverifiedIcon);
@@ -177,55 +151,16 @@ public class ProfileFragment extends Fragment {
         progressBarCoverPhoto = view.findViewById(R.id.progressBarCoverPhoto);
         PhotoProfile = view.findViewById(R.id.PhotoProfile);
         SeconsPhotoProfile = view.findViewById(R.id.SeconsPhotoProfile);
-        SearchButton = view.findViewById(R.id.SearchButton);
 
-        if(mainActivity.currentUser==null){
-            mainActivity.Auth();
-        }else{
-            setExitTransition(new MaterialFadeThrough());
-            setEnterTransition(new MaterialFadeThrough());
-            setReenterTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
-            LoadMyUserInfo();
-            SearchFragmentInit();
-        }
+        GetBundleLoadInfoByID();
 
-
-        //Кнопка настроек
-        SettingsButton = view.findViewById(R.id.SettingsButton);
-        SettingsButton.hide();
-        SettingsButton.setOnClickListener(new View.OnClickListener() {
+        BackToButton = view.findViewById(R.id.BackToButton);
+        BackToButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(cUserInfo!=null) {
-                    settingsFragment = new SettingsFragment();
-                    SetIntelizationBundle(settingsFragment);
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.ProfileFragmentConteiner, settingsFragment, "Settings").addToBackStack(null).commit();
-                }
+
+                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
-
-        SearchButton.hide();
-        SearchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.ProfileFragmentConteiner, searchUsersFragment, "SearchUsers").addToBackStack(null).commit();
-            }
-        });
-
-        CardProfileNameInfo = view.findViewById(R.id.CardProfileNameInfo);
-        CardProfileNameInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(IsverifiedIcon.getVisibility()==View.VISIBLE){
-                    Toast.makeText(getContext(),"Данный аккаунт верифицирован",Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
     }
 }

@@ -24,6 +24,8 @@ import com.AniDeko.anidekoandroid.DataStructure.UserListItemProfileAdapter;
 import com.AniDeko.anidekoandroid.MainActivity;
 import com.AniDeko.anidekoandroid.R;
 import com.google.android.material.search.SearchBar;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.transition.MaterialSharedAxis;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,7 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 
-public class SeacrhUsersFragment extends Fragment {
+public class SeacrhUsersFragment extends Fragment implements UserListItemProfileAdapter.ItemClickListener  {
 
 
 
@@ -42,7 +44,9 @@ public class SeacrhUsersFragment extends Fragment {
     RecyclerView UsersRycecleView;
     EditText SearchUsersEditText;
     MainActivity mainActivity;
+    public static final String Bunlde_UserID_Tag = "IdUser";
     DatabaseReference Userdatabase;
+    String cUserID;
     UserListItemProfileAdapter userListItemProfileAdapter;
 
     private ArrayList<User> UserslistTemp = new ArrayList<>();
@@ -54,8 +58,9 @@ public class SeacrhUsersFragment extends Fragment {
 
     private void init(){
         //Второй столбец данных
-        userListItemProfileAdapter = new UserListItemProfileAdapter(getContext(),UserslistTemp);
-        LinearLayoutManager layoutManager= new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL, false);
+        userListItemProfileAdapter = new UserListItemProfileAdapter(getActivity(),UserslistTemp);
+        userListItemProfileAdapter.setClickListener(this::onItemClick);
+        LinearLayoutManager layoutManager= new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL, false);
         UsersRycecleView.setLayoutManager(layoutManager);
         UsersRycecleView.setAdapter(userListItemProfileAdapter);
     }
@@ -73,9 +78,11 @@ public class SeacrhUsersFragment extends Fragment {
                     User user = ds.getValue(User.class);
                     //Проверка
                     assert user != null;
-                    UserslistTemp.add(user);
-                    Log.d("SearchChek", String.valueOf(UsersRycecleView.getChildCount()));
-                    Log.d("SearchChek", String.valueOf(UserslistTemp.size()));
+                    if(user.isBanned==false) {
+                        if(!user.ID.equals(cUserID)) {
+                            UserslistTemp.add(user);
+                        }
+                    }
                 }
                 userListItemProfileAdapter.notifyDataSetChanged();
             }
@@ -102,7 +109,6 @@ public class SeacrhUsersFragment extends Fragment {
     private void filter(String text) {
         // creating a new array list to filter our data.
         ArrayList<User> filteredlist = new ArrayList<User>();
-
         // running a for loop to compare elements.
         for (User item : UserslistTemp) {
             // checking if the entered string matched with any item of our recycler view.
@@ -113,7 +119,6 @@ public class SeacrhUsersFragment extends Fragment {
             }
         }
         if (filteredlist.isEmpty()) {
-
         } else {
             // at last we are passing that filtered
             // list to our adapter class.
@@ -128,6 +133,7 @@ public class SeacrhUsersFragment extends Fragment {
         mainActivity = (MainActivity) getActivity();
         UsersRycecleView = view.findViewById(R.id.UsersRycecleView);
         SearchUsersEditText = view.findViewById(R.id.SearchUsersEditText);
+        cUserID = mainActivity.currentUser.getUid();
         init();
         DownloadSectionFirebaseData();
 
@@ -136,7 +142,6 @@ public class SeacrhUsersFragment extends Fragment {
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 filter(charSequence.toString());
@@ -148,8 +153,6 @@ public class SeacrhUsersFragment extends Fragment {
             }
         });
 
-
-
         BackToProfileButton = view.findViewById(R.id.BackToProfileButton);
         BackToProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,5 +160,21 @@ public class SeacrhUsersFragment extends Fragment {
                 getActivity().getSupportFragmentManager().popBackStack();
             }
         });
+    }
+
+
+    @Override
+    public void onItemClick(View view, int position) {
+        //Передача ID аккаунта и запуск фрагмента
+        Bundle UserIDBundle = new Bundle();
+        UserIDBundle.putString(Bunlde_UserID_Tag,UserslistTemp.get(position).ID);
+
+        SocialProfileUserFragment SocialProfileUserFragment = new SocialProfileUserFragment();
+        SocialProfileUserFragment.setArguments(UserIDBundle);
+
+        SocialProfileUserFragment.setEnterTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
+        SocialProfileUserFragment.setReturnTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
+
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.SearchUsersFragmentConteiner, SocialProfileUserFragment, UserslistTemp.get(position).ID).addToBackStack(null).commit();
     }
 }

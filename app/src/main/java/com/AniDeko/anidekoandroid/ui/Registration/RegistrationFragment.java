@@ -51,7 +51,6 @@ public class RegistrationFragment extends Fragment {
         //Анимация
         progressBarRegistration.setVisibility(View.VISIBLE);
         //Инициализация данных
-        User user = new User(email, name,"","","",false,false);
         mainActivity.DataBaseInit();
         //Запрос создания данных о пользователе
         mainActivity.auth.createUserWithEmailAndPassword(EmailRegistrationEditText.getText().toString(), PasswordRegistrationEditText.getText().toString())
@@ -64,6 +63,7 @@ public class RegistrationFragment extends Fragment {
                                     .setDisplayName(NickNameRegistrationEditText.getText().toString())
                                     .build();
                             mainActivity.auth.getCurrentUser().updateProfile(profileUpdates);
+                            User user = new User(email, name,"","","",false,false,mainActivity.auth.getCurrentUser().getUid());
                             //Запрос на добавление данных в бд
                             mainActivity.mDatabase.child(MainActivity.Users_Child).child(mainActivity.auth.getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override

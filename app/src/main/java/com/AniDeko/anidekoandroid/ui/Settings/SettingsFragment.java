@@ -123,7 +123,7 @@ public class SettingsFragment extends Fragment {
 
     private void UpdateUserProfile(){
         ProfileFragment profileFragment = (ProfileFragment) mainActivity.getSupportFragmentManager().findFragmentByTag("3");
-        profileFragment.LoadUserInfo();
+        profileFragment.LoadMyUserInfo();
     }
 
     private byte[] GetByteFromPhoto(){

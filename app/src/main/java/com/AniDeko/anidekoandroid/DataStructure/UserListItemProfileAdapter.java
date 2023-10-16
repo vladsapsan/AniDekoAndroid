@@ -16,18 +16,18 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-public class UserListItemProfileAdapter  extends RecyclerView.Adapter<UserListItemProfileAdapter.ViewHolderSection>{
+public class UserListItemProfileAdapter  extends RecyclerView.Adapter<UserListItemProfileAdapter.ViewHolder>{
 
 
     private ArrayList<User> mListArticle;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
-    public class ViewHolderSection extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
         ImageView ImageProfile,VerifyedIcon;
 
-        ViewHolderSection(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             myTextView = itemView.findViewById(R.id.UserName);
             ImageProfile = itemView.findViewById(R.id.ImageProfile);
@@ -37,7 +37,7 @@ public class UserListItemProfileAdapter  extends RecyclerView.Adapter<UserListIt
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+            mClickListener.onItemClick(view, getAdapterPosition());
         }
     }
 
@@ -50,20 +50,24 @@ public class UserListItemProfileAdapter  extends RecyclerView.Adapter<UserListIt
 
     @NonNull
     @Override
-    public ViewHolderSection onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.list_item_profile, parent, false);
-        return new ViewHolderSection(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolderSection holder, int position) {
-        holder.myTextView.setText((mListArticle.get(position).NickName).toString());
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        User user = mListArticle.get(position);
+        holder.myTextView.setText((user.NickName).toString());
         //Загрузка картинок с помощью библиотеки
         if(mListArticle.get(position).PhotoUri!=null) {
-            Glide.with(this.mInflater.getContext()).load(mListArticle.get(position).PhotoUri).into(holder.ImageProfile);
+            Glide.with(this.mInflater.getContext()).load(user.PhotoUri).into(holder.ImageProfile);
         }
-        if(mListArticle.get(position).isVerifeid==true){
+        if(user.isVerifeid==true){
             holder.VerifyedIcon.setVisibility(View.VISIBLE);
+        }
+        else{
+            holder.VerifyedIcon.setVisibility(View.GONE);
         }
     }
 
@@ -74,6 +78,9 @@ public class UserListItemProfileAdapter  extends RecyclerView.Adapter<UserListIt
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
         void onItemClick(View view, int position);
+    }
+    public User getItem(int id) {
+        return mListArticle.get(id);
     }
 
     @Override
