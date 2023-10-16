@@ -382,7 +382,7 @@ public class SettingsFragment extends Fragment {
         BackToProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivity.getSupportFragmentManager().popBackStack();
+                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
 

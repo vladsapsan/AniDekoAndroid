@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AniDekoAndroid</string>
+    <string name="app_name">AniDeko</string>
     <string name="title_home">Главная</string>
     <string name="title_trend">Тренды</string>
     <string name="title_profile">Профиль</string>
@@ -11,6 +11,8 @@
     <string name="Enter">Войти</string>
     <string name="Save">Сохранить</string>
     <string name="ExitProfile">Выйти из аккаунта</string>
+    <string name="Subscribe">Подписчики</string>
+    <string name="SearchUsers">Поиск пользователей</string>
     <string name="Registration">Регистрация</string>
     <string name="RegistrationText">Войдите или создайте профиль, чтобы открыть для себя полный функционал приложения</string>
     <string name="AgreeText">Нажимая кнопку продолжить, вы принимаете <a href='https://stackoverflow.com/'> пользовательское соглашение </a> и <a href='https://vk.com/'> правила сообщества </a></string>

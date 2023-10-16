@@ -26,6 +26,7 @@ import com.AniDeko.anidekoandroid.MainActivity;
 import com.AniDeko.anidekoandroid.ui.Auth.AuthFragment;
 import com.AniDeko.anidekoandroid.R;
 import com.AniDeko.anidekoandroid.ui.Settings.SettingsFragment;
+import com.AniDeko.anidekoandroid.ui.UsersSocial.SeacrhUsersFragment;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -34,6 +35,7 @@ import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.transition.MaterialContainerTransform;
 import com.google.android.material.transition.MaterialFadeThrough;
 import com.google.android.material.transition.MaterialSharedAxis;
 import com.google.firebase.auth.FirebaseUser;
@@ -55,8 +57,9 @@ public class ProfileFragment extends Fragment {
     User cUserInfo;
     Bundle UserInfoBundle;
     ProgressBar progressBarProfile,progressBarCoverPhoto;
-    FloatingActionButton SettingsButton;
+    FloatingActionButton SettingsButton,SearchButton;
     SettingsFragment settingsFragment;
+    SeacrhUsersFragment searchUsersFragment;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -141,6 +144,11 @@ public class ProfileFragment extends Fragment {
         UserInfoBundle.putSerializable(Bunlde_UserInfo_Tag,cUserInfo);
         fragment.setArguments(UserInfoBundle);
     }
+    private void SearchFragmentInit(){
+        searchUsersFragment = new SeacrhUsersFragment();
+        searchUsersFragment.setEnterTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
+        searchUsersFragment.setReturnTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -163,6 +171,7 @@ public class ProfileFragment extends Fragment {
         progressBarCoverPhoto = view.findViewById(R.id.progressBarCoverPhoto);
         PhotoProfile = view.findViewById(R.id.PhotoProfile);
         SeconsPhotoProfile = view.findViewById(R.id.SeconsPhotoProfile);
+        SearchButton = view.findViewById(R.id.SearchButton);
 
         if(mainActivity.currentUser==null){
             mainActivity.Auth();
@@ -171,6 +180,7 @@ public class ProfileFragment extends Fragment {
             setEnterTransition(new MaterialFadeThrough());
             setReenterTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
             LoadUserInfo();
+            SearchFragmentInit();
         }
 
 
@@ -182,8 +192,15 @@ public class ProfileFragment extends Fragment {
                 if(cUserInfo!=null) {
                     settingsFragment = new SettingsFragment();
                     SetIntelizationBundle(settingsFragment);
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.ProfileFragmentConteiner, settingsFragment, "Settings").addToBackStack("SettingsBack").commit();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.ProfileFragmentConteiner, settingsFragment, "Settings").addToBackStack(null).commit();
                 }
+            }
+        });
+
+        SearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.ProfileFragmentConteiner, searchUsersFragment, "SearchUsers").addToBackStack(null).commit();
             }
         });
 

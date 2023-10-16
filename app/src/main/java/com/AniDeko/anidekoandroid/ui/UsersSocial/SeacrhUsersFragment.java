@@ -1,0 +1,161 @@
+package com.AniDeko.anidekoandroid.ui.UsersSocial;
+
+import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.AniDeko.anidekoandroid.DataStructure.User;
+import com.AniDeko.anidekoandroid.DataStructure.UserListItemProfileAdapter;
+import com.AniDeko.anidekoandroid.MainActivity;
+import com.AniDeko.anidekoandroid.R;
+import com.google.android.material.search.SearchBar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
+
+public class SeacrhUsersFragment extends Fragment {
+
+
+
+    ImageView BackToProfileButton;
+    SearchBar SearchUserBar;
+    RecyclerView UsersRycecleView;
+    EditText SearchUsersEditText;
+    MainActivity mainActivity;
+    DatabaseReference Userdatabase;
+    UserListItemProfileAdapter userListItemProfileAdapter;
+
+    private ArrayList<User> UserslistTemp = new ArrayList<>();
+
+    public SeacrhUsersFragment() {
+        // Required empty public constructor
+    }
+
+
+    private void init(){
+        //Второй столбец данных
+        userListItemProfileAdapter = new UserListItemProfileAdapter(getContext(),UserslistTemp);
+        LinearLayoutManager layoutManager= new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL, false);
+        UsersRycecleView.setLayoutManager(layoutManager);
+        UsersRycecleView.setAdapter(userListItemProfileAdapter);
+    }
+
+    //Загрузка разделов из базы
+    private void DownloadSectionFirebaseData()
+    {
+        Userdatabase = FirebaseDatabase.getInstance().getReference(MainActivity.Users_Child);
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(UserslistTemp.size()>0) UserslistTemp.clear();
+                for (DataSnapshot ds : snapshot.getChildren())
+                {
+                    User user = ds.getValue(User.class);
+                    //Проверка
+                    assert user != null;
+                    UserslistTemp.add(user);
+                    Log.d("SearchChek", String.valueOf(UsersRycecleView.getChildCount()));
+                    Log.d("SearchChek", String.valueOf(UserslistTemp.size()));
+                }
+                userListItemProfileAdapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        };
+        Userdatabase.addValueEventListener(valueEventListener);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_seacrh_users, container, false);
+    }
+
+    private void filter(String text) {
+        // creating a new array list to filter our data.
+        ArrayList<User> filteredlist = new ArrayList<User>();
+
+        // running a for loop to compare elements.
+        for (User item : UserslistTemp) {
+            // checking if the entered string matched with any item of our recycler view.
+            if (item.NickName.toLowerCase().contains(text.toLowerCase())) {
+                // if the item is matched we are
+                // adding it to our filtered list.
+                filteredlist.add(item);
+            }
+        }
+        if (filteredlist.isEmpty()) {
+
+        } else {
+            // at last we are passing that filtered
+            // list to our adapter class.
+            userListItemProfileAdapter.filterList(filteredlist);
+        }
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mainActivity = (MainActivity) getActivity();
+        UsersRycecleView = view.findViewById(R.id.UsersRycecleView);
+        SearchUsersEditText = view.findViewById(R.id.SearchUsersEditText);
+        init();
+        DownloadSectionFirebaseData();
+
+        SearchUsersEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                filter(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
+
+        BackToProfileButton = view.findViewById(R.id.BackToProfileButton);
+        BackToProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
+    }
+}

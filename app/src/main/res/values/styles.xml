@@ -27,7 +27,7 @@
 
     //Стиль нижнего навигационного меню
     <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
-        <item name="android:color">@color/ShadowMainBlue</item>
+        <item name="android:color">@color/MainWhite</item>
         <item name="android:fontFamily">@font/montserrat_regular</item>
     </style>
 </resources>

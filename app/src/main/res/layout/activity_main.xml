@@ -16,7 +16,7 @@
             android:layout_gravity="bottom"
             app:itemRippleColor="@color/ShadowMainBlue"
             app:itemIconSize="28dp"
-            app:itemIconTint="@color/white"
+            app:itemIconTint="@color/bottom_menu_item_color"
             app:itemTextAppearanceActiveBoldEnabled="true"
             app:itemTextColor="@color/bottom_menu_item_color"
             android:layout_width="match_parent"
