@@ -1,5 +1,6 @@
 package com.AniDeko.anidekoandroid.ui.profile;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,11 @@ import com.AniDeko.anidekoandroid.MainActivity;
 import com.AniDeko.anidekoandroid.ui.Auth.AuthFragment;
 import com.AniDeko.anidekoandroid.R;
 import com.AniDeko.anidekoandroid.ui.Settings.SettingsFragment;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -39,7 +45,7 @@ import kotlin.Pair;
 public class ProfileFragment extends Fragment {
 
     MainActivity mainActivity;
-    ImageView IsverifiedIcon;
+    ImageView IsverifiedIcon,PhotoProfile;
     CardView CardProfileNameInfo;
     TextView UserNameTextView,UserStatusTextView;
     public final static String Bunlde_UserInfo_Tag = "UserInfo";
@@ -73,6 +79,20 @@ public class ProfileFragment extends Fragment {
             if(cUserInfo.userStatus!=""){
                 UserStatusTextView.setText(cUserInfo.userStatus);
             }
+            if(cUserInfo.PhotoUri!=null){
+                Glide.with(getActivity()).load(cUserInfo.PhotoUri).listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, @Nullable Object model, @NonNull Target<Drawable> target, boolean isFirstResource) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(@NonNull Drawable resource, @NonNull Object model, Target<Drawable> target, @NonNull DataSource dataSource, boolean isFirstResource) {
+                        progressBarProfile.setVisibility(View.GONE);
+                        return false;
+                    }
+                }).into(PhotoProfile);
+            }
         }
     }
 
@@ -89,7 +109,6 @@ public class ProfileFragment extends Fragment {
                     //Данные аккаунта успешно получены
                     cUserInfo = task.getResult().getValue(User.class);
                     LoadProfile();
-                    progressBarProfile.setVisibility(View.GONE);
                 }else {
                     Toast.makeText(getActivity(), "Ошибка загрузки профиля", Toast.LENGTH_SHORT).show();
                 }
@@ -121,7 +140,7 @@ public class ProfileFragment extends Fragment {
         IsverifiedIcon = view.findViewById(R.id.IsverifiedIcon);
         UserStatusTextView = view.findViewById(R.id.UserStatusTextView);
         progressBarProfile = view.findViewById(R.id.progressBarProfile);
-
+        PhotoProfile = view.findViewById(R.id.PhotoProfile);
 
         if(mainActivity.currentUser==null){
             mainActivity.Auth();

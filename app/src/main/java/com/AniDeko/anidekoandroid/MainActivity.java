@@ -29,6 +29,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     public Boolean UserisSign;
     public FirebaseAuth auth;
     public  FirebaseUser currentUser;
+    public StorageReference storageReference;
     ProfileFragment ProfileFragment;
     HomeFragment homeFragment;
     AuthFragment AuthFragment;
@@ -119,6 +122,11 @@ public class MainActivity extends AppCompatActivity {
     public void DataBaseInit(){
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
+    //Инициализируем storage
+    public void StorageInit(){
+        storageReference = FirebaseStorage.getInstance().getReference();;
+    }
+
 
 
     public void Auth(){

@@ -122,6 +122,7 @@
                     <TextView
                         android:id="@+id/UserStatusTextView"
                         android:maxLines="4"
+                        android:ellipsize="end"
                         android:textSize="12dp"
                         android:layout_marginTop="2dp"
                         android:layout_width="wrap_content"
