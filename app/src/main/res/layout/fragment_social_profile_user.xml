@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ProfileFragmentConteiner"
+    android:clickable="true"
     android:background="@color/MainBlack"
     tools:context=".ui.profile.ProfileFragment">
 
