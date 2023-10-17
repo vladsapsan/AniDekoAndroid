@@ -8,12 +8,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 //Типизация отправки данных о пользователях
 public class User implements Serializable {
     //Для успешной обработки данных, обязательно модификатор public
     public String NickName;
     public String Email;
+    public List<Subscribes> SubList;
     public String userStatus;
     public String ID;
     public Boolean isVerifeid;
@@ -39,7 +42,7 @@ public class User implements Serializable {
     }
 
     //Полный конструктор
-    public User(String Nickname,String Email,String PhotoUri,String userStatus,String SecondPhotoUri,Boolean isBanned,Boolean isVerifeid,String ID){
+    public User(String Nickname,String Email,String PhotoUri,String userStatus,String SecondPhotoUri,Boolean isBanned,Boolean isVerifeid,String ID,List<Subscribes> SubList){
         this.NickName = Nickname;
         this.Email = Email;
         this.PhotoUri = PhotoUri;
@@ -48,5 +51,6 @@ public class User implements Serializable {
         this.isBanned = isBanned;
         this.isVerifeid = isVerifeid;
         this.ID = ID;
+        this.SubList = SubList;
     }
 }

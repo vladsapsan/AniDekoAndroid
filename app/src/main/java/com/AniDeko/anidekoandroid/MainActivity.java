@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     HomeFragment homeFragment;
     AuthFragment AuthFragment;
     public final static String Users_Child = "Users";
+    public final static String Users_SubList="SubList";
     TrendsFragment TrendsFragment;
     public DatabaseReference mDatabase;
     BottomNavigationView navView;
@@ -123,6 +124,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    public void UpdateUserProfile(){
+        ProfileFragment.LoadMyUserInfo();
+    }
 
     //Инициализируем бд
     public void DataBaseInit(){

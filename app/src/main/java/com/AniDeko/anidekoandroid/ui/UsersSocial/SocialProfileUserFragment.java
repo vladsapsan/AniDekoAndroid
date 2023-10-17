@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.AniDeko.anidekoandroid.DataStructure.Subscribes;
 import com.AniDeko.anidekoandroid.DataStructure.User;
 import com.AniDeko.anidekoandroid.MainActivity;
 import com.AniDeko.anidekoandroid.R;
@@ -31,19 +32,25 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.transition.MaterialFadeThrough;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class SocialProfileUserFragment extends Fragment {
 
 
 
     MainActivity mainActivity;
+    DatabaseReference databaseReference;
     ImageView IsverifiedIcon,PhotoProfile,SeconsPhotoProfile;
     ProgressBar progressBarProfile,progressBarCoverPhoto;
     User cUserInfo;
     String UserID;
-    CardView CardProfileNameInfo;
+    CardView CardProfileNameInfo,SubscribeButton,UnSubscribeButton;
     Bundle UserIDBunlde;
-    TextView UserNameTextView,UserStatusTextView;
+    TextView UserNameTextView,UserStatusTextView,UserSubsNumber;
     FloatingActionButton BackToButton;
     public SocialProfileUserFragment() {
         // Required empty public constructor
@@ -108,6 +115,9 @@ public class SocialProfileUserFragment extends Fragment {
             }else {
                 progressBarCoverPhoto.setVisibility(View.GONE);
             }
+            if(cUserInfo.SubList!=null){
+                UserSubsNumber.setText(String.valueOf(cUserInfo.SubList.size()));
+            }
         }
     }
 
@@ -117,12 +127,13 @@ public class SocialProfileUserFragment extends Fragment {
         progressBarCoverPhoto.setVisibility(View.VISIBLE);
         //Инициализируем бд
         mainActivity.DataBaseInit();
-        mainActivity.mDatabase.child(mainActivity.Users_Child).child(UserID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        mainActivity.mDatabase.child(MainActivity.Users_Child).child(UserID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if(task.isSuccessful()){
                     //Данные аккаунта успешно получены
                     cUserInfo = task.getResult().getValue(User.class);
+                    isSubscribe();
                     LoadProfile();
                 }else {
                     Toast.makeText(getActivity(), "Ошибка загрузки профиля", Toast.LENGTH_SHORT).show();
@@ -131,6 +142,18 @@ public class SocialProfileUserFragment extends Fragment {
         });
     }
 
+
+    private void isSubscribe(){
+        if(mainActivity.cUserInfo.SubList!=null) {
+            for (Subscribes sub : mainActivity.cUserInfo.SubList) {
+                if (sub.SubsribeID.equals(UserID)) {
+                    SubscribeButton.setVisibility(View.GONE);
+                    UnSubscribeButton.setVisibility(View.VISIBLE);
+                    break;
+                }
+            }
+        }
+    }
     //Получение информации о пользователе из фрагмента профиля
     private void GetBundleLoadInfoByID(){
         UserIDBunlde = getArguments();
@@ -151,15 +174,54 @@ public class SocialProfileUserFragment extends Fragment {
         progressBarProfile = view.findViewById(R.id.progressBarProfile);
         progressBarCoverPhoto = view.findViewById(R.id.progressBarCoverPhoto);
         PhotoProfile = view.findViewById(R.id.PhotoProfile);
+        UserSubsNumber = view.findViewById(R.id.UserSubsNumber);
         SeconsPhotoProfile = view.findViewById(R.id.SeconsPhotoProfile);
 
         GetBundleLoadInfoByID();
+
+        //Кнопка подписаться
+        SubscribeButton = view.findViewById(R.id.SubscribeButton);
+        SubscribeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SubscribeButton.setEnabled(false);
+                databaseReference = mainActivity.mDatabase;
+                Date currentTime = Calendar.getInstance().getTime();
+                if (mainActivity.cUserInfo.SubList != null) {
+                    Subscribes Sub = new Subscribes(UserID, currentTime.toString());
+                    mainActivity.cUserInfo.SubList.add(Sub);
+                    databaseReference.child(MainActivity.Users_Child)
+                            .child(mainActivity.currentUser.getUid()).child(MainActivity.Users_SubList).setValue(mainActivity.cUserInfo.SubList)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(getContext(), "Вы подписались", Toast.LENGTH_SHORT).show();
+                                        isSubscribe();
+                                        mainActivity.UpdateUserProfile();
+                                    } else {
+                                        Toast.makeText(getContext(), "Что-то пошло не так, попробуйте еще раз", Toast.LENGTH_SHORT).show();
+                                        SubscribeButton.setEnabled(true);
+                                    }
+                                }
+                            });
+                }
+            }
+        });
+
+        //Кнопка отписки
+        UnSubscribeButton = view.findViewById(R.id.UnSubscribeButton);
+        UnSubscribeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "Вы подписаны", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         BackToButton = view.findViewById(R.id.BackToButton);
         BackToButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 getActivity().getSupportFragmentManager().popBackStack();
             }
         });

@@ -52,9 +52,9 @@ public class ProfileFragment extends Fragment {
     MainActivity mainActivity;
     ImageView IsverifiedIcon,PhotoProfile,SeconsPhotoProfile;
     CardView CardProfileNameInfo;
-    TextView UserNameTextView,UserStatusTextView;
+    TextView UserNameTextView,UserStatusTextView,UserSubsNumber;
     public final static String Bunlde_UserInfo_Tag = "UserInfo";
-    User cUserInfo;
+    public User cUserInfo;
     Bundle UserInfoBundle;
     ProgressBar progressBarProfile,progressBarCoverPhoto;
     FloatingActionButton SettingsButton,SearchButton;
@@ -117,6 +117,9 @@ public class ProfileFragment extends Fragment {
             }else {
                 progressBarCoverPhoto.setVisibility(View.GONE);
             }
+            if(cUserInfo.SubList!=null){
+                UserSubsNumber.setText(String.valueOf(cUserInfo.SubList.size()));
+            }
             SettingsButton.show();
             SearchButton.show();
         }
@@ -137,6 +140,7 @@ public class ProfileFragment extends Fragment {
                 if(task.isSuccessful()){
                     //Данные аккаунта успешно получены
                     cUserInfo = task.getResult().getValue(User.class);
+                    mainActivity.cUserInfo = cUserInfo;
                     LoadProfile();
                 }else {
                     Toast.makeText(getActivity(), "Ошибка загрузки профиля", Toast.LENGTH_SHORT).show();
@@ -176,6 +180,7 @@ public class ProfileFragment extends Fragment {
         progressBarProfile = view.findViewById(R.id.progressBarProfile);
         progressBarCoverPhoto = view.findViewById(R.id.progressBarCoverPhoto);
         PhotoProfile = view.findViewById(R.id.PhotoProfile);
+        UserSubsNumber = view.findViewById(R.id.UserSubsNumber);
         SeconsPhotoProfile = view.findViewById(R.id.SeconsPhotoProfile);
         SearchButton = view.findViewById(R.id.SearchButton);
 

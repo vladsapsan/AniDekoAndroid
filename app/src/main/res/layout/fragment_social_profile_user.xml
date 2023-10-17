@@ -62,29 +62,92 @@
                     android:layout_marginLeft="16dp"
                     android:layout_gravity="bottom"
                     android:layout_height="wrap_content">
-                    <com.google.android.material.card.MaterialCardView
+                    <FrameLayout
                         android:layout_marginTop="5dp"
-                        android:layout_width="100dp"
-                        app:strokeWidth="0dp"
-                        app:strokeColor="@color/MainWhite"
-                        app:cardCornerRadius="100dp"
-                        app:cardElevation="5dp"
-                        android:layout_height="100dp">
-                        <ImageView
-                            android:id="@+id/PhotoProfile"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/MainWhite"
-                            android:scaleType="centerCrop"/>
-                        <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/SubscribeButton"
+                            android:clickable="true"
+                            android:visibility="visible"
+                            app:rippleColor="@color/MainWhiteTransparent"
+                            android:layout_width="wrap_content"
+                            android:layout_gravity="left|bottom"
+                            app:strokeWidth="0dp"
+                            app:cardElevation="8dp"
+                            android:layout_marginLeft="80dp"
+                            app:cardCornerRadius="5dp"
+                            app:cardBackgroundColor="@color/MainBlue"
+                            android:layout_height="30dp">
+                            <LinearLayout
+                                android:layout_marginLeft="6dp"
+                                android:layout_marginRight="6dp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:layout_width="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_height="match_parent">
+                                <ImageView
+                                    android:layout_width="18dp"
+                                    android:foreground="@drawable/person_add24px"
+                                    android:foregroundTint="@color/MainWhite"
+                                    android:layout_height="18dp"/>
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/UnSubscribeButton"
                             android:visibility="gone"
-                            android:id="@+id/progressBarProfile"
-                            style="?android:attr/progressBarStyle"
-                            android:layout_gravity="center"
-                            android:indeterminateTint="@color/MainBlue"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp" />
-                    </com.google.android.material.card.MaterialCardView>
+                            android:clickable="true"
+                            app:rippleColor="@color/MainWhiteTransparent"
+                            android:layout_width="wrap_content"
+                            android:layout_gravity="left|bottom"
+                            app:strokeWidth="0dp"
+                            app:cardElevation="8dp"
+                            android:layout_marginLeft="80dp"
+                            app:cardCornerRadius="5dp"
+                            app:cardBackgroundColor="@color/MainWhiteTransparent"
+                            android:layout_height="30dp">
+                            <LinearLayout
+                                android:layout_marginLeft="6dp"
+                                android:layout_marginRight="6dp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:layout_width="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_height="match_parent">
+                                <ImageView
+                                    android:layout_width="18dp"
+                                    android:foreground="@drawable/person_check24px"
+                                    android:foregroundTint="@color/MainBlue"
+                                    android:layout_height="18dp"/>
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="100dp"
+                            app:strokeWidth="0dp"
+                            app:strokeColor="@color/MainWhite"
+                            app:cardCornerRadius="100dp"
+                            app:cardElevation="5dp"
+                            android:layout_height="100dp">
+                            <ImageView
+                                android:id="@+id/PhotoProfile"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@color/MainWhite"
+                                android:scaleType="centerCrop"/>
+                            <ProgressBar
+                                android:visibility="gone"
+                                android:id="@+id/progressBarProfile"
+                                style="?android:attr/progressBarStyle"
+                                android:layout_gravity="center"
+                                android:indeterminateTint="@color/MainBlue"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </FrameLayout>
+
 
 
                     <com.google.android.material.card.MaterialCardView
@@ -165,35 +228,7 @@
                     android:gravity="left"
                     android:layout_height="wrap_content">
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="wrap_content"
-                        android:layout_gravity="left"
-                        app:strokeWidth="0dp"
-                        app:cardBackgroundColor="@color/MainBlue"
-                        android:layout_height="35dp">
-                        <LinearLayout
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:gravity="center"
-                            android:layout_gravity="center"
-                            android:layout_width="match_parent"
-                            android:orientation="horizontal"
-                            android:layout_height="match_parent">
-                            <ImageView
-                                android:layout_width="18dp"
-                                android:src="@drawable/add24px"
-                                android:layout_height="18dp"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:textColor="@color/MainWhite"
-                                android:gravity="center"
-                                android:layout_gravity="center"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat_semi_bold"
-                                android:text="Подписаться"/>
-                        </LinearLayout>
 
-                    </com.google.android.material.card.MaterialCardView>
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -243,7 +278,7 @@
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/montserrat_regular"
                                     android:textColor="@color/MainWhite"
-                                    android:text="Подписчики"/>
+                                    android:text="Подписки"/>
                             </LinearLayout>
                         </LinearLayout>
                     </FrameLayout>

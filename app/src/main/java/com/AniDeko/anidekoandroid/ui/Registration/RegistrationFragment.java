@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.AniDeko.anidekoandroid.DataStructure.Subscribes;
 import com.AniDeko.anidekoandroid.DataStructure.User;
 import com.AniDeko.anidekoandroid.MainActivity;
 import com.AniDeko.anidekoandroid.R;
@@ -35,6 +37,7 @@ import com.google.firebase.database.DatabaseReference;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 
@@ -63,7 +66,9 @@ public class RegistrationFragment extends Fragment {
                                     .setDisplayName(NickNameRegistrationEditText.getText().toString())
                                     .build();
                             mainActivity.auth.getCurrentUser().updateProfile(profileUpdates);
-                            User user = new User(email, name,"","","",false,false,mainActivity.auth.getCurrentUser().getUid());
+                            ArrayList<Subscribes> subs = new ArrayList<Subscribes>();
+                            subs.add(new Subscribes("",""));
+                            User user = new User(email, name,"","","",false,false,mainActivity.auth.getCurrentUser().getUid(),subs);
                             //Запрос на добавление данных в бд
                             mainActivity.mDatabase.child(MainActivity.Users_Child).child(mainActivity.auth.getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override

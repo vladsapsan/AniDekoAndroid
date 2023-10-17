@@ -239,7 +239,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/montserrat_regular"
                                 android:textColor="@color/MainWhite"
-                                android:text="Подписчики"/>
+                                android:text="Подписок"/>
                         </LinearLayout>
                     </LinearLayout>
                 </FrameLayout>
