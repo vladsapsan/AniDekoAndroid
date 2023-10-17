@@ -11,9 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,6 +27,7 @@ import com.AniDeko.anidekoandroid.MainActivity;
 import com.AniDeko.anidekoandroid.R;
 import com.google.android.material.search.SearchBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.transition.MaterialFadeThrough;
 import com.google.android.material.transition.MaterialSharedAxis;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -96,7 +99,7 @@ public class SeacrhUsersFragment extends Fragment implements UserListItemProfile
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setExitTransition(new MaterialFadeThrough());
     }
 
     @Override
@@ -152,6 +155,15 @@ public class SeacrhUsersFragment extends Fragment implements UserListItemProfile
 
             }
         });
+        SearchUsersEditText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    MainActivity.hideKeyboardFrom(getContext(),getView());
+                }
+                return false;
+            }
+        });
 
         BackToProfileButton = view.findViewById(R.id.BackToProfileButton);
         BackToProfileButton.setOnClickListener(new View.OnClickListener() {
@@ -176,6 +188,8 @@ public class SeacrhUsersFragment extends Fragment implements UserListItemProfile
         SocialProfileUserFragment.setEnterTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
         SocialProfileUserFragment.setReturnTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
 
+        MainActivity.hideKeyboardFrom(getContext(),getView());
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.SearchUsersFragmentConteiner, SocialProfileUserFragment, userListItemProfileAdapter.getItem(position).ID).addToBackStack(null).commit();
+
     }
 }

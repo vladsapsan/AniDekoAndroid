@@ -29,6 +29,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.transition.MaterialFadeThrough;
 import com.google.firebase.database.DataSnapshot;
 
 public class SocialProfileUserFragment extends Fragment {
@@ -52,7 +53,7 @@ public class SocialProfileUserFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setExitTransition(new MaterialFadeThrough());
     }
 
     @Override

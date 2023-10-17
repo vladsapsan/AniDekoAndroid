@@ -15,15 +15,12 @@ public class User implements Serializable {
     public String NickName;
     public String Email;
     public String userStatus;
-
     public String ID;
     public Boolean isVerifeid;
     public Boolean isBanned;
     public String PhotoUri;
     public String SecondPhotoUri;
-
     public User(){}
-
     public User(String Nickname, String Email,Boolean isBanned){
         this.NickName = Nickname;
         this.Email = Email;
@@ -34,13 +31,11 @@ public class User implements Serializable {
         this.Email = Email;
         this.PhotoUri = PhotoUri;
     }
-
     public User(String Nickname,String Email,String PhotoUri,String SecondPhotoUri){
         this.NickName = Nickname;
         this.Email = Email;
         this.PhotoUri = PhotoUri;
         this.SecondPhotoUri = SecondPhotoUri;
-
     }
 
     //Полный конструктор
@@ -54,6 +49,4 @@ public class User implements Serializable {
         this.isVerifeid = isVerifeid;
         this.ID = ID;
     }
-
-
 }

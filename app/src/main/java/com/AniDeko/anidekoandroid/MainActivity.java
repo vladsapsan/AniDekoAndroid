@@ -1,10 +1,13 @@
 package com.AniDeko.anidekoandroid;
 
+import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
@@ -131,6 +134,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public static void hideKeyboardFrom(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 
     public void Auth(){
         //Пробуем авторизоваться

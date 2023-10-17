@@ -51,7 +51,7 @@ public class SettingsFragment extends Fragment {
     boolean isAvatar = false;
     Button ExitFromAccButton;
     MainActivity mainActivity;
-    EditText EditTextPerson;
+    EditText EditTextPerson,EditTextNickName;
     Bundle UserInfoBunlde;
     ImageView UserPhoto,UserCover;
     User cUserInfo;
@@ -345,6 +345,37 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        //Редактирование статуса профиля
+        View EditNickNameProfileDialog = LayoutInflater.from(getContext())
+                .inflate(
+                        R.layout.bottom_sheet_dialog_edit_nickname_profile,
+                        (FrameLayout) view.findViewById(R.id.SheetDialogEditANicknNameProfileContainer)
+                );
+        EditTextNickName = EditNickNameProfileDialog.findViewById(R.id.ProfileNickNameEditText);
+        EditTextNickName.setText(cUserInfo.NickName);
+        EditNickNameProfileDialog.findViewById(R.id.SaveButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
+                mainActivity.mDatabase.child(mainActivity.Users_Child).child(mainActivity.currentUser.getUid()).child("NickName")
+                        .setValue(EditTextNickName.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    bottomSheetDialog.dismiss();
+                                    progressBar.setVisibility(View.GONE);
+                                    UpdateUserProfile();
+                                    Snackbar.make(getView(),"Никнейм обновлен", Snackbar.LENGTH_SHORT).setBackgroundTint(getResources().getColor(R.color.MainWhite)).setTextColor(getResources().getColor(R.color.MainBlack)).show();
+                                }else {
+                                    Snackbar.make(view,"Ошибка обновления никнейма", Snackbar.LENGTH_SHORT).setBackgroundTint(getResources().getColor(R.color.MainWhite)).setTextColor(getResources().getColor(R.color.MainBlack)).show();
+                                }
+                            }
+                        });
+            }
+        });
+
+
+
         //Кнопка редактирования аватара
         EditAvatarProfileButton = view.findViewById(R.id.EditAvatarProfileButton);
         EditAvatarProfileButton.setOnClickListener(new View.OnClickListener() {
@@ -367,6 +398,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        //Кнопка редактирования обложки
         EditCoverProfileButton = view.findViewById(R.id.EditCoverProfileButton);
         EditCoverProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -377,6 +409,16 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        //Кнопка редактирования ника
+        EditNickNameProfileButton = view.findViewById(R.id.EditNickNameProfileButton);
+        EditNickNameProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                progressBar = EditNickNameProfileDialog.findViewById(R.id.progressBar);
+                bottomSheetDialog.setContentView(EditNickNameProfileDialog);
+                bottomSheetDialog.show();
+            }
+        });
         //Кнопка закрытия окна настроек
         BackToProfileButton = view.findViewById(R.id.BackToProfileButton);
         BackToProfileButton.setOnClickListener(new View.OnClickListener() {
