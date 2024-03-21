@@ -33,9 +33,6 @@ import com.google.android.material.transition.MaterialFadeThrough;
 import com.google.firebase.database.DataSnapshot;
 
 public class SocialProfileUserFragment extends Fragment {
-
-
-
     MainActivity mainActivity;
     ImageView IsverifiedIcon,PhotoProfile,SeconsPhotoProfile;
     ProgressBar progressBarProfile,progressBarCoverPhoto;

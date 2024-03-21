@@ -16,7 +16,7 @@
         app:tint ="@color/MainWhite"
         app:fabSize="mini"
         app:srcCompat ="@drawable/search24px"
-        app:backgroundTint="@color/MainBlack"
+        app:backgroundTint="@color/MainBlackTransparent"
         android:layout_marginRight="16dp"
         style="?attr/floatingActionButtonSmallStyle"
         android:layout_marginTop="32dp"
@@ -37,12 +37,13 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="420dp">
-        <ImageView
-            android:id="@+id/MainAnimeImageView"
-            android:layout_width="match_parent"
+        <VideoView
+
+            android:layout_width="fill_parent"
+            android:layout_height="250dp"
+            android:id="@+id/MainAnimeVideoView"
             android:src="@drawable/imagedecor"
-            android:scaleType="centerCrop"
-            android:layout_height="match_parent"/>
+            android:scaleType="centerCrop" />
         <LinearLayout
             android:layout_gravity="bottom"
             android:orientation="vertical"
@@ -52,6 +53,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <com.google.android.material.card.MaterialCardView
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground"
                 android:layout_width="match_parent"
                 app:strokeWidth="0dp"
                 android:layout_marginBottom="6dp"
@@ -74,12 +77,16 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_fire"/>
+
+                            <com.airbnb.lottie.LottieAnimationView
+                                android:id="@+id/animationFireView"
+                                android:layout_width="26dp"
+                                android:layout_height="26dp"
+                                app:lottie_rawRes="@raw/fireanimation"
+                                app:lottie_autoPlay="true"
+                                app:lottie_loop="true"/>
                             <TextView
-                                android:layout_marginLeft="5dp"
+
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
@@ -121,7 +128,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Название аниме!"
+                        android:text="Семья шпиона: Код Белый!"
                         android:textSize="20dp"
                         android:lines="1"
                         android:textColor="@color/MainWhite"
@@ -134,7 +141,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Дополнительное название аниме"
+                            android:text="Дополнительное название"
                             android:textSize="14dp"
                             android:textColor="@color/SupportGrayText"
                             android:fontFamily="@font/montserrat_bold"
@@ -202,36 +209,177 @@
     </FrameLayout>
 
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_marginTop="12dp"
+        android:orientation="vertical"
         android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:orientation="horizontal"
+            android:gravity="center"
             android:layout_height="wrap_content">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Подборка аниме"
+                android:text="Топ этого сезона"
                 android:textSize="18dp"
                 android:lines="1"
                 android:textColor="@color/MainWhite"
                 android:fontFamily="@font/montserrat_bold"
                 android:gravity="center_horizontal" />
+            <LinearLayout
+                android:layout_gravity="right"
+                android:gravity="center|right"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Смотреть все"
+                    android:textSize="12dp"
+                    android:layout_gravity="center"
+                    android:lines="1"
+                    android:textColor="@color/MainBlue"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:gravity="center_horizontal" />
+                <ImageView
+                    android:layout_width="16dp"
+                    android:src="@drawable/arrow_back_ios24px"
+                    android:foregroundTint="@color/MainBlue"
+                    android:rotationY="180"
+                    android:layout_height="16dp"/>
+            </LinearLayout>
+        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/AnimeOfthisSeasonRecycleView"
+            android:layout_width="match_parent"
+            tools:listitem="@layout/animecard"
+            android:layout_height="225dp"/>
+    </LinearLayout>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="16dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="12dp"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_height="wrap_content">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Смотреть все"
-                android:textSize="12dp"
+                android:text="Наиболее популярные"
+                android:textSize="18dp"
                 android:lines="1"
-                android:textColor="@color/MainBlue"
+                android:textColor="@color/MainWhite"
                 android:fontFamily="@font/montserrat_bold"
                 android:gravity="center_horizontal" />
+            <LinearLayout
+                android:layout_gravity="right"
+                android:gravity="center|right"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Смотреть все"
+                    android:textSize="12dp"
+                    android:layout_gravity="center"
+                    android:lines="1"
+                    android:textColor="@color/MainBlue"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:gravity="center_horizontal" />
+                <ImageView
+                    android:layout_width="16dp"
+                    android:src="@drawable/arrow_back_ios24px"
+                    android:foregroundTint="@color/MainBlue"
+                    android:rotationY="180"
+                    android:layout_height="16dp"/>
+            </LinearLayout>
         </LinearLayout>
-    </FrameLayout>
+        <FrameLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:background="@color/SupportGray"
+            android:layout_height="wrap_content">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/UsersRycecleView"
+                android:layout_width="match_parent"
+                tools:listitem="@layout/animecard"
+                android:layout_height="225dp"/>
+        </FrameLayout>
+    </LinearLayout>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="16dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="12dp"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Специально для вас"
+                android:textSize="18dp"
+                android:lines="1"
+                android:textColor="@color/MainWhite"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="center_horizontal" />
+            <LinearLayout
+                android:layout_gravity="right"
+                android:gravity="center|right"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Смотреть все"
+                    android:textSize="12dp"
+                    android:layout_gravity="center"
+                    android:lines="1"
+                    android:textColor="@color/MainBlue"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:gravity="center_horizontal" />
+                <ImageView
+                    android:layout_width="16dp"
+                    android:src="@drawable/arrow_back_ios24px"
+                    android:foregroundTint="@color/MainBlue"
+                    android:rotationY="180"
+                    android:layout_height="16dp"/>
+            </LinearLayout>
+        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/AnimeRecycleView"
+            android:layout_width="match_parent"
+            tools:listitem="@layout/animecard"
+            android:layout_height="225dp"/>
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="16dp"/>
+
 
 
 </LinearLayout>

@@ -25,6 +25,11 @@
     </style>
 
 
+    <style name="BlurNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="android:windowBackgroundBlurRadius">30dp</item>
+        <item name="android:windowBlurBehindEnabled">true</item>
+        <item name="android:windowBlurBehindRadius">10dp</item>
+    </style>
     //Стиль нижнего навигационного меню
     <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/MainWhite</item>

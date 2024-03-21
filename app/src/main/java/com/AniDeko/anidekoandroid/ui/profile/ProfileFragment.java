@@ -68,7 +68,7 @@ public class ProfileFragment extends Fragment {
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+        public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
@@ -208,6 +208,7 @@ public class ProfileFragment extends Fragment {
         SearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.ProfileFragmentConteiner, searchUsersFragment, "SearchUsers").addToBackStack(null).commit();
             }
         });
@@ -227,5 +228,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
     }
 }

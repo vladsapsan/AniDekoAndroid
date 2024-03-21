@@ -8,6 +8,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 //Типизация отправки данных о пользователях
 public class User implements Serializable {
@@ -20,6 +24,7 @@ public class User implements Serializable {
     public Boolean isBanned;
     public String PhotoUri;
     public String SecondPhotoUri;
+    public Map<String, String> SubScribeList = new HashMap<>();
     public User(){}
     public User(String Nickname, String Email,Boolean isBanned){
         this.NickName = Nickname;
@@ -48,5 +53,15 @@ public class User implements Serializable {
         this.isBanned = isBanned;
         this.isVerifeid = isVerifeid;
         this.ID = ID;
+    }
+
+    public final void AddSubsribe(String IDProfile){
+        SubScribeList.put((IDProfile), String.valueOf((Calendar.getInstance().getTime())));
+    }
+    public final Map<String, String> GetSubsribe(){
+        return SubScribeList;
+    }
+    public final void DeleteSubsribe(String IDProfile){
+        SubScribeList.remove((IDProfile), String.valueOf((Calendar.getInstance().getTime())));
     }
 }

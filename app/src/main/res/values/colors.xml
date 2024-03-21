@@ -10,7 +10,7 @@
 
     //Наши основные цвета
     <color name="MainBlack">#333531</color>
-    <color name="MainBlackTransparent">#BF333531</color>
+    <color name="MainBlackTransparent">#D9333531</color>
     <color name="MainWhite">#F5F3EF</color>
     <color name="MainWhiteTransparent">#BFF5F3EF</color>
     <color name="MainBlue">#009BEA</color>

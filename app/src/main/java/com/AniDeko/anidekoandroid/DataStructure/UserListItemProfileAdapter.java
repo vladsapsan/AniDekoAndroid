@@ -60,7 +60,7 @@ public class UserListItemProfileAdapter  extends RecyclerView.Adapter<UserListIt
         User user = mListArticle.get(position);
         holder.myTextView.setText((user.NickName).toString());
         //Загрузка картинок с помощью библиотеки
-        if(mListArticle.get(position).PhotoUri!=null) {
+        if(user.PhotoUri!=null) {
             Glide.with(this.mInflater.getContext()).load(user.PhotoUri).into(holder.ImageProfile);
         }
         if(user.isVerifeid==true){

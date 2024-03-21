@@ -22,12 +22,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
 
 import com.AniDeko.anidekoandroid.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -64,8 +66,12 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        //инициализация фрагментов
+
+        //Инициализация нижнего навигационного меню
         navView = findViewById(R.id.nav_view);
+
+
+        //инициализация фрагментов
         homeFragment = new HomeFragment();
         TrendsFragment = new TrendsFragment();
         ProfileFragment = new ProfileFragment();
