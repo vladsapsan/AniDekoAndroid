@@ -3,15 +3,14 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bottomsheetbackground"
-    android:id="@+id/SheetDialogEditCoverProfileContainer"
+    android:id="@+id/SheetDialogRateProfileContainer"
     android:layout_height="match_parent">
-
     <LinearLayout
         android:layout_marginTop="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
             android:layout_width="50dp"
@@ -19,36 +18,29 @@
             app:cardBackgroundColor="@color/MainBlack"
             android:layout_height="5dp"/>
         <TextView
-            android:layout_marginTop="8dp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_semi_bold"
-            android:textSize="16dp"
-            android:text="@string/EditProfileUserCover"/>
+            android:textSize="18dp"
+            android:text="Рейтинг аккаунта!"/>
+
+        <TextView
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_regular"
+            android:textSize="14dp"
+            android:text="Оцените аккаунт пользователя, используя нашу метрику"/>
+
+
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/CardUserCover"
-            android:clickable="true"
-            android:foreground="?attr/selectableItemBackground"
-            android:layout_width="match_parent"
-            app:cardCornerRadius="0dp"
-            app:cardBackgroundColor="@color/MainWhite"
-            app:cardElevation="8dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="16dp"
-            app:strokeWidth="0dp"
-            android:layout_height="145dp">
-            <ImageView
-                android:id="@+id/UserCoverDownload"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"/>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/SaveAvatarButton"
-            android:layout_marginBottom="120dp"
+            android:id="@+id/SaveButton"
+            android:layout_marginBottom="200dp"
             android:layout_width="match_parent"
             android:layout_marginTop="20dp"
             app:cardElevation="8dp"
@@ -72,9 +64,10 @@
                 android:fontFamily="@font/montserrat_semi_bold"
                 android:textColor="@color/MainWhite"
                 android:textSize="14dp"
-                android:text="@string/Save"
+                android:text="Оценить"
                 android:layout_gravity="center"
                 android:layout_height="wrap_content"/>
         </com.google.android.material.card.MaterialCardView>
+
     </LinearLayout>
 </FrameLayout>

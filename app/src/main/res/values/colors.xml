@@ -19,4 +19,5 @@
     <color name="SupportGray">#B5B5B5</color>
     <color name="TransparentColor">#00000000</color>
     <color name="MainRed">#ff2400</color>
+    <color name="LightYellow">#ffbf1f</color>
 </resources>

@@ -70,7 +70,7 @@ public class SettingsFragment extends Fragment {
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_PICTURE) {
                 Uri selectedImageUri = data.getData();
-                if(getMimeType(selectedImageUri).toLowerCase().contains("jpeg")||getMimeType(selectedImageUri).toLowerCase().contains("png")){
+                if(getMimeType(selectedImageUri).toLowerCase().contains("jpeg")||getMimeType(selectedImageUri).toLowerCase().contains("png")||getMimeType(selectedImageUri).toLowerCase().contains("webp")){
                     if(isAvatar==true) {
                         UserPhoto.setImageURI(selectedImageUri);
                     }else {
@@ -121,10 +121,6 @@ public class SettingsFragment extends Fragment {
         cUserInfo = (User) UserInfoBunlde.getSerializable(ProfileFragment.Bunlde_UserInfo_Tag);
     }
 
-    private void UpdateUserProfile(){
-        ProfileFragment profileFragment = (ProfileFragment) mainActivity.getSupportFragmentManager().findFragmentByTag("3");
-        profileFragment.LoadMyUserInfo();
-    }
 
     private byte[] GetByteFromPhoto(){
         Drawable photo;
@@ -188,7 +184,7 @@ public class SettingsFragment extends Fragment {
                         if(task.isSuccessful()){
                             bottomSheetDialog.dismiss();
                             progressBar.setVisibility(View.GONE);
-                            UpdateUserProfile();
+                            mainActivity.UpdateUserProfile();
                             Snackbar.make(getView(),"Статус обновлен", Snackbar.LENGTH_SHORT).setBackgroundTint(getResources().getColor(R.color.MainWhite)).setTextColor(getResources().getColor(R.color.MainBlack)).show();
                         }else {
                             Snackbar.make(view,"Ошибка обновления статуса", Snackbar.LENGTH_SHORT).setBackgroundTint(getResources().getColor(R.color.MainWhite)).setTextColor(getResources().getColor(R.color.MainBlack)).show();
@@ -251,7 +247,7 @@ public class SettingsFragment extends Fragment {
                                         if(task.isSuccessful()){
                                             //Аватар загружен
                                             bottomSheetDialog.dismiss();
-                                            UpdateUserProfile();
+                                            mainActivity.UpdateUserProfile();
                                             progressBar.setVisibility(View.GONE);
                                         }else {
                                             progressBar.setVisibility(View.GONE);
@@ -324,7 +320,7 @@ public class SettingsFragment extends Fragment {
                                         if(task.isSuccessful()){
                                             //Обложка загружена
                                             bottomSheetDialog.dismiss();
-                                            UpdateUserProfile();
+                                            mainActivity.UpdateUserProfile();
                                             progressBar.setVisibility(View.GONE);
                                         }else {
                                             progressBar.setVisibility(View.GONE);
@@ -364,7 +360,7 @@ public class SettingsFragment extends Fragment {
                                 if(task.isSuccessful()){
                                     bottomSheetDialog.dismiss();
                                     progressBar.setVisibility(View.GONE);
-                                    UpdateUserProfile();
+                                    mainActivity.UpdateUserProfile();
                                     Snackbar.make(getView(),"Никнейм обновлен", Snackbar.LENGTH_SHORT).setBackgroundTint(getResources().getColor(R.color.MainWhite)).setTextColor(getResources().getColor(R.color.MainBlack)).show();
                                 }else {
                                     Snackbar.make(view,"Ошибка обновления никнейма", Snackbar.LENGTH_SHORT).setBackgroundTint(getResources().getColor(R.color.MainWhite)).setTextColor(getResources().getColor(R.color.MainBlack)).show();

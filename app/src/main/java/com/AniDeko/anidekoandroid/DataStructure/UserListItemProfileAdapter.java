@@ -19,14 +19,13 @@ import java.util.ArrayList;
 public class UserListItemProfileAdapter  extends RecyclerView.Adapter<UserListItemProfileAdapter.ViewHolder>{
 
 
-    private ArrayList<User> mListArticle;
+    private ArrayList<SimpleUser> mListArticle;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
         ImageView ImageProfile,VerifyedIcon;
-
         ViewHolder(View itemView) {
             super(itemView);
             myTextView = itemView.findViewById(R.id.UserName);
@@ -41,7 +40,7 @@ public class UserListItemProfileAdapter  extends RecyclerView.Adapter<UserListIt
         }
     }
 
-    public UserListItemProfileAdapter(Context context, ArrayList<User> mListArticle){
+    public UserListItemProfileAdapter(Context context, ArrayList<SimpleUser> mListArticle){
         this.mInflater = LayoutInflater.from(context);
         this.mListArticle = mListArticle;
     }
@@ -57,7 +56,7 @@ public class UserListItemProfileAdapter  extends RecyclerView.Adapter<UserListIt
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        User user = mListArticle.get(position);
+        SimpleUser user = mListArticle.get(position);
         holder.myTextView.setText((user.NickName).toString());
         //Загрузка картинок с помощью библиотеки
         if(user.PhotoUri!=null) {
@@ -79,7 +78,7 @@ public class UserListItemProfileAdapter  extends RecyclerView.Adapter<UserListIt
     public interface ItemClickListener {
         void onItemClick(View view, int position);
     }
-    public User getItem(int id) {
+    public SimpleUser getItem(int id) {
         return mListArticle.get(id);
     }
 
@@ -89,7 +88,7 @@ public class UserListItemProfileAdapter  extends RecyclerView.Adapter<UserListIt
     }
 
     // method for filtering our recyclerview items.
-    public void filterList(ArrayList<User> filterlist) {
+    public void filterList(ArrayList<SimpleUser> filterlist) {
         // below line is to add our filtered
         // list in our course array list.
         mListArticle = filterlist;
