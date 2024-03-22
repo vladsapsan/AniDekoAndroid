@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     AuthFragment AuthFragment;
     public final static String Users_Child = "Users";
     public final static String Users_SubList="SubList";
+    public final static String Users_MySubsList="MySubsList";
     TrendsFragment TrendsFragment;
     public DatabaseReference mDatabase;
     BottomNavigationView navView;

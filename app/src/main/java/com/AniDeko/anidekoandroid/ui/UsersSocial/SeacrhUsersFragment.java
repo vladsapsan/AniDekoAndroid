@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.AniDeko.anidekoandroid.DataStructure.SimpleUser;
 import com.AniDeko.anidekoandroid.DataStructure.User;
 import com.AniDeko.anidekoandroid.DataStructure.UserListItemProfileAdapter;
 import com.AniDeko.anidekoandroid.MainActivity;
@@ -52,7 +53,7 @@ public class SeacrhUsersFragment extends Fragment implements UserListItemProfile
     String cUserID;
     UserListItemProfileAdapter userListItemProfileAdapter;
 
-    private ArrayList<User> UserslistTemp = new ArrayList<>();
+    private ArrayList<SimpleUser> UserslistTemp = new ArrayList<>();
 
     public SeacrhUsersFragment() {
         // Required empty public constructor
@@ -78,7 +79,7 @@ public class SeacrhUsersFragment extends Fragment implements UserListItemProfile
                 if(UserslistTemp.size()>0) UserslistTemp.clear();
                 for (DataSnapshot ds : snapshot.getChildren())
                 {
-                    User user = ds.getValue(User.class);
+                    SimpleUser user = ds.getValue(SimpleUser.class);
                     //Проверка
                     assert user != null;
                     if(user.isBanned==false) {
@@ -111,9 +112,9 @@ public class SeacrhUsersFragment extends Fragment implements UserListItemProfile
 
     private void filter(String text) {
         // creating a new array list to filter our data.
-        ArrayList<User> filteredlist = new ArrayList<User>();
+        ArrayList<SimpleUser> filteredlist = new ArrayList<SimpleUser>();
         // running a for loop to compare elements.
-        for (User item : UserslistTemp) {
+        for (SimpleUser item : UserslistTemp) {
             // checking if the entered string matched with any item of our recycler view.
             if (item.NickName.toLowerCase().contains(text.toLowerCase())) {
                 // if the item is matched we are
@@ -177,9 +178,10 @@ public class SeacrhUsersFragment extends Fragment implements UserListItemProfile
 
     @Override
     public void onItemClick(View view, int position) {
+
+
         //Передача ID аккаунта и запуск фрагмента
         Bundle UserIDBundle = new Bundle();
-
         UserIDBundle.putString(Bunlde_UserID_Tag,userListItemProfileAdapter.getItem(position).ID);
 
         SocialProfileUserFragment SocialProfileUserFragment = new SocialProfileUserFragment();
@@ -190,6 +192,12 @@ public class SeacrhUsersFragment extends Fragment implements UserListItemProfile
 
         MainActivity.hideKeyboardFrom(getContext(),getView());
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.SearchUsersFragmentConteiner, SocialProfileUserFragment, userListItemProfileAdapter.getItem(position).ID).addToBackStack(null).commit();
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
 
     }
 }

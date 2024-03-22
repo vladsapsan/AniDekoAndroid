@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bottomsheetbackground"
+    android:id="@+id/SheetDialogUnsubscribeProfileContainer"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="50dp"
+            app:cardCornerRadius="10dp"
+            app:cardBackgroundColor="@color/MainBlack"
+            android:layout_height="5dp"/>
+        <TextView
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_semi_bold"
+            android:textSize="16dp"
+            android:textColor="@color/MainBlack"
+            android:text="Отписаться от пользователя?"/>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/UnsubscribeButton"
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="14dp"
+            app:strokeColor="@color/MainRed"
+            app:strokeWidth="1.5dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            app:cardBackgroundColor="@color/white">
+            <ProgressBar
+                android:visibility="gone"
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="24dp"
+                android:indeterminateTint="@color/MainRed"
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:fontFamily="@font/montserrat_semi_bold"
+                android:textColor="@color/MainRed"
+                android:textSize="14dp"
+                android:text="Отписаться"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/ExitButton"
+            android:layout_marginBottom="60dp"
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="14dp"
+            app:strokeWidth="0dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            app:cardBackgroundColor="@color/MainBlack">
+            <TextView
+                android:layout_width="wrap_content"
+                android:fontFamily="@font/montserrat_semi_bold"
+                android:textColor="@color/MainWhite"
+                android:textSize="14dp"
+                android:text="Отмена"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+</FrameLayout>

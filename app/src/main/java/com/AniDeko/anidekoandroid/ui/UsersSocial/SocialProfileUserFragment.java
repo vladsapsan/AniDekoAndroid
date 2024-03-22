@@ -11,7 +11,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +30,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.transition.MaterialFadeThrough;
@@ -47,11 +50,13 @@ public class SocialProfileUserFragment extends Fragment {
     ImageView IsverifiedIcon,PhotoProfile,SeconsPhotoProfile;
     ProgressBar progressBarProfile,progressBarCoverPhoto;
     User cUserInfo;
+    LinearLayout SubscribeIcon;
     String UserID;
+    ProgressBar progressBar,progressBarSubscribe;
     CardView CardProfileNameInfo,SubscribeButton,UnSubscribeButton;
     Bundle UserIDBunlde;
-    TextView UserNameTextView,UserStatusTextView,UserSubsNumber;
-    FloatingActionButton BackToButton;
+    TextView UserNameTextView,UserStatusTextView,UserSubsNumber,UserYourSubsNumber;
+    FloatingActionButton BackToButton,RateButton,MenuButton;
     public SocialProfileUserFragment() {
         // Required empty public constructor
     }
@@ -115,9 +120,12 @@ public class SocialProfileUserFragment extends Fragment {
             }else {
                 progressBarCoverPhoto.setVisibility(View.GONE);
             }
-            if(cUserInfo.SubList!=null){
-                UserSubsNumber.setText(String.valueOf(cUserInfo.SubList.size()));
-            }
+         //   if(cUserInfo.SubList!=null){
+          //      UserSubsNumber.setText(String.valueOf(cUserInfo.SubList.size()));
+         //   }
+         //   if(cUserInfo.MySubsList!=null){
+          //      UserYourSubsNumber.setText(String.valueOf(cUserInfo.MySubsList.size()));
+         //   }
         }
     }
 
@@ -133,7 +141,6 @@ public class SocialProfileUserFragment extends Fragment {
                 if(task.isSuccessful()){
                     //Данные аккаунта успешно получены
                     cUserInfo = task.getResult().getValue(User.class);
-                    isSubscribe();
                     LoadProfile();
                 }else {
                     Toast.makeText(getActivity(), "Ошибка загрузки профиля", Toast.LENGTH_SHORT).show();
@@ -143,17 +150,17 @@ public class SocialProfileUserFragment extends Fragment {
     }
 
 
-    private void isSubscribe(){
-        if(mainActivity.cUserInfo.SubList!=null) {
-            for (Subscribes sub : mainActivity.cUserInfo.SubList) {
-                if (sub.SubsribeID.equals(UserID)) {
-                    SubscribeButton.setVisibility(View.GONE);
-                    UnSubscribeButton.setVisibility(View.VISIBLE);
-                    break;
-                }
-            }
-        }
-    }
+  //  private void isSubscribe(){
+     //   if(mainActivity.cUserInfo.SubList!=null) {
+     //       for (Subscribes sub : mainActivity.cUserInfo.SubList) {
+      //          if (sub.SubsribeID.equals(UserID)) {
+     //               SubscribeButton.setVisibility(View.GONE);
+    //                UnSubscribeButton.setVisibility(View.VISIBLE);
+    //                break;
+    //            }
+   //         }
+    //    }
+  //  }
     //Получение информации о пользователе из фрагмента профиля
     private void GetBundleLoadInfoByID(){
         UserIDBunlde = getArguments();
@@ -176,28 +183,74 @@ public class SocialProfileUserFragment extends Fragment {
         PhotoProfile = view.findViewById(R.id.PhotoProfile);
         UserSubsNumber = view.findViewById(R.id.UserSubsNumber);
         SeconsPhotoProfile = view.findViewById(R.id.SeconsPhotoProfile);
-
+        progressBarSubscribe = view.findViewById(R.id.progressBarSubscribe);
+        SubscribeIcon = view.findViewById(R.id.SubscribeIcon);
+        UserYourSubsNumber = view.findViewById(R.id.UserYourSubsNumber);
         GetBundleLoadInfoByID();
+
+
+
+        //Диалог снизу
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.ModalBottomSheetDialog);
+        //Оценка профиля
+        View RateProfileDialog = LayoutInflater.from(getContext())
+                .inflate(
+                        R.layout.bottom_sheet_dialog_rate_profile,
+                        (FrameLayout) view.findViewById(R.id.SheetDialogRateProfileContainer)
+                );
+        //Диалог отписки
+        View UnSubscribeProfileDialog = LayoutInflater.from(getContext())
+                .inflate(
+                        R.layout.bottom_sheet_dialog_unsubscribe,
+                        (FrameLayout) view.findViewById(R.id.SheetDialogUnsubscribeProfileContainer)
+                );
+        UnSubscribeProfileDialog.findViewById(R.id.ExitButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetDialog.dismiss();
+            }
+        });
+        UnSubscribeProfileDialog.findViewById(R.id.UnsubscribeButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
+            }
+        });
 
         //Кнопка подписаться
         SubscribeButton = view.findViewById(R.id.SubscribeButton);
+        SubscribeButton.setEnabled(false);
         SubscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SubscribeButton.setEnabled(false);
+                progressBarSubscribe.setVisibility(View.VISIBLE);
+                SubscribeIcon.setVisibility(View.GONE);
                 databaseReference = mainActivity.mDatabase;
                 Date currentTime = Calendar.getInstance().getTime();
-                if (mainActivity.cUserInfo.SubList != null) {
-                    Subscribes Sub = new Subscribes(UserID, currentTime.toString());
-                    mainActivity.cUserInfo.SubList.add(Sub);
+                if (mainActivity.cUserInfo != null) {
+                    //Добавляем инфу  о пользователе в бд
                     databaseReference.child(MainActivity.Users_Child)
-                            .child(mainActivity.currentUser.getUid()).child(MainActivity.Users_SubList).setValue(mainActivity.cUserInfo.SubList)
+                            .child(mainActivity.currentUser.getUid()).child(MainActivity.Users_SubList).push().setValue(new Subscribes(UserID,currentTime.toString()))
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
+                                        //Добавляем в инфу в подписчики канала
+                                        databaseReference.child(MainActivity.Users_Child).child(UserID)
+                                                .child(MainActivity.Users_MySubsList)
+                                                .push().setValue(new Subscribes(mainActivity.currentUser.getUid(),currentTime.toString())).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if(task.isSuccessful()){
+
+                                                        }else {
+                                                            Toast.makeText(getContext(), "Ошибка загрузки", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                });
                                         Toast.makeText(getContext(), "Вы подписались", Toast.LENGTH_SHORT).show();
-                                        isSubscribe();
+                                       // isSubscribe();
                                         mainActivity.UpdateUserProfile();
                                     } else {
                                         Toast.makeText(getContext(), "Что-то пошло не так, попробуйте еще раз", Toast.LENGTH_SHORT).show();
@@ -205,6 +258,8 @@ public class SocialProfileUserFragment extends Fragment {
                                     }
                                 }
                             });
+                }else {
+
                 }
             }
         });
@@ -214,7 +269,27 @@ public class SocialProfileUserFragment extends Fragment {
         UnSubscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Вы подписаны", Toast.LENGTH_SHORT).show();
+                progressBar = UnSubscribeProfileDialog.findViewById(R.id.progressBar);
+                bottomSheetDialog.setContentView(UnSubscribeProfileDialog);
+                bottomSheetDialog.show();
+            }
+        });
+
+        //Кнопка оценки аккаунта
+        RateButton = view.findViewById(R.id.RateButton);
+        RateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetDialog.setContentView(RateProfileDialog);
+                bottomSheetDialog.show();
+            }
+        });
+
+        MenuButton = view.findViewById(R.id.MenuButton);
+        MenuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
 

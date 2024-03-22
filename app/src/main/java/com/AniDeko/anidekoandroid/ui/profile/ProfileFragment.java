@@ -52,7 +52,7 @@ public class ProfileFragment extends Fragment {
     MainActivity mainActivity;
     ImageView IsverifiedIcon,PhotoProfile,SeconsPhotoProfile;
     CardView CardProfileNameInfo;
-    TextView UserNameTextView,UserStatusTextView,UserSubsNumber;
+    TextView UserNameTextView,UserStatusTextView,UserSubsNumber,UserYourSubsNumber;
     public final static String Bunlde_UserInfo_Tag = "UserInfo";
     public User cUserInfo;
     Bundle UserInfoBundle;
@@ -117,9 +117,12 @@ public class ProfileFragment extends Fragment {
             }else {
                 progressBarCoverPhoto.setVisibility(View.GONE);
             }
-            if(cUserInfo.SubList!=null){
-                UserSubsNumber.setText(String.valueOf(cUserInfo.SubList.size()));
-            }
+          //  if(cUserInfo.SubList!=null){
+          //      UserSubsNumber.setText(String.valueOf(cUserInfo.SubList.size()));
+          //  }
+          //  if(cUserInfo.MySubsList!=null){
+          //      UserYourSubsNumber.setText(String.valueOf(cUserInfo.MySubsList.size()));
+          //  }
             SettingsButton.show();
             SearchButton.show();
         }
@@ -183,6 +186,7 @@ public class ProfileFragment extends Fragment {
         UserSubsNumber = view.findViewById(R.id.UserSubsNumber);
         SeconsPhotoProfile = view.findViewById(R.id.SeconsPhotoProfile);
         SearchButton = view.findViewById(R.id.SearchButton);
+        UserYourSubsNumber = view.findViewById(R.id.UserYourSubsNumber);
 
         if(mainActivity.currentUser==null){
             mainActivity.Auth();

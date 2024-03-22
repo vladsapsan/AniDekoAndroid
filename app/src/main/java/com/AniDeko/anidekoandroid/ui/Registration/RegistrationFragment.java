@@ -38,6 +38,7 @@ import com.google.firebase.database.DatabaseReference;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 
@@ -66,9 +67,9 @@ public class RegistrationFragment extends Fragment {
                                     .setDisplayName(NickNameRegistrationEditText.getText().toString())
                                     .build();
                             mainActivity.auth.getCurrentUser().updateProfile(profileUpdates);
-                            ArrayList<Subscribes> subs = new ArrayList<Subscribes>();
+                            ArrayList<Subscribes> subs = new ArrayList<>();
                             subs.add(new Subscribes("",""));
-                            User user = new User(email, name,"","","",false,false,mainActivity.auth.getCurrentUser().getUid(),subs);
+                            User user = new User(email, name,"","","",false,false,mainActivity.auth.getCurrentUser().getUid());
                             //Запрос на добавление данных в бд
                             mainActivity.mDatabase.child(MainActivity.Users_Child).child(mainActivity.auth.getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
@@ -93,6 +94,8 @@ public class RegistrationFragment extends Fragment {
     public RegistrationFragment() {
         // Required empty public constructor
     }
+
+
 
 
     public static boolean isValidPassword(String s) {
