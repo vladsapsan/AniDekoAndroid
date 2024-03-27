@@ -170,29 +170,25 @@ public class SeacrhUsersFragment extends Fragment implements UserListItemProfile
         BackToProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().getSupportFragmentManager().popBackStack();
+                ((MainActivity) getActivity()).navController.popBackStack();
             }
         });
     }
 
 
+    //Навигация в профиль пользователя
     @Override
     public void onItemClick(View view, int position) {
+       // MainActivity.hideKeyboardFrom(getContext(),getView());
+        ((MainActivity) getActivity()).navController.navigate(R.id.action_seacrhUsersFragment_to_socialProfileUserFragment,SetIntelizationBundle(position));
 
+    }
 
-        //Передача ID аккаунта и запуск фрагмента
+    //Создаем банд с информацией профиля
+    private Bundle SetIntelizationBundle(int Count){
         Bundle UserIDBundle = new Bundle();
-        UserIDBundle.putString(Bunlde_UserID_Tag,userListItemProfileAdapter.getItem(position).ID);
-
-        SocialProfileUserFragment SocialProfileUserFragment = new SocialProfileUserFragment();
-        SocialProfileUserFragment.setArguments(UserIDBundle);
-
-        SocialProfileUserFragment.setEnterTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
-        SocialProfileUserFragment.setReturnTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
-
-        MainActivity.hideKeyboardFrom(getContext(),getView());
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.SearchUsersFragmentConteiner, SocialProfileUserFragment, userListItemProfileAdapter.getItem(position).ID).addToBackStack(null).commit();
-
+        UserIDBundle.putString(Bunlde_UserID_Tag,userListItemProfileAdapter.getItem(Count).ID);
+        return UserIDBundle;
     }
 
     @Override

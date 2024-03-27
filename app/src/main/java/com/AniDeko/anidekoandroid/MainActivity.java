@@ -27,6 +27,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
@@ -41,22 +42,16 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 public class MainActivity extends AppCompatActivity {
-
-    private ActivityMainBinding binding;
-    public Boolean UserisSign;
     public FirebaseAuth auth;
     public  FirebaseUser currentUser;
     public StorageReference storageReference;
-    ProfileFragment ProfileFragment;
-    HomeFragment homeFragment;
-    AuthFragment AuthFragment;
     public final static String Users_Child = "Users";
     public final static String Users_SubList="SubList";
     public final static String Users_MySubsList="MySubsList";
-    TrendsFragment TrendsFragment;
     public DatabaseReference mDatabase;
     BottomNavigationView navView;
     final FragmentManager fm = getSupportFragmentManager();
+    public NavController navController;
     Fragment active = null;
     public User cUserInfo;
 
@@ -64,42 +59,27 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        //Инициализация FireAuth при создании
+
+
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
+        assert navHostFragment != null;
+        navController = navHostFragment.getNavController();
+
 
 
         //Инициализация нижнего навигационного меню
         navView = findViewById(R.id.nav_view);
 
+        if(savedInstanceState==null) {
 
-        //инициализация фрагментов
-        homeFragment = new HomeFragment();
-        TrendsFragment = new TrendsFragment();
-        ProfileFragment = new ProfileFragment();
-        setFragment(homeFragment, "1", 1);
+        }
 
-
-
-        //Инициализация при создании
-        auth = FirebaseAuth.getInstance();
-
-        navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if(item.getItemId()==R.id.home){
-                    setFragment(homeFragment, "1", 1);
-                } else if (item.getItemId()==R.id.trends) {
-                    setFragment(TrendsFragment, "2", 0);
-                } else if (item.getItemId()==R.id.profile) {
-                    setFragment(ProfileFragment, "3", 2);
-                }
-                return false;
-            }
-        });
-
-
+        NavigationUI.setupWithNavController(navView,navController);
     }
+
     //функция навигации между фрагментами по нижнему меню
     public void setFragment(Fragment fragment, String tag, int position) {
         if (fm.findFragmentByTag(tag)!=null) {
@@ -117,25 +97,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //Вызов экземпляра фрагмента
-    public Fragment getFragment(int Fragment_id){
-        switch (Fragment_id){
-            case 1:
-                return homeFragment;
-            case 2:
-                return TrendsFragment;
-            case 3:
-                return ProfileFragment;
-            default:
-                return homeFragment;
-        }
-    }
+
+
 
 
     public void UpdateUserProfile(){
-        ProfileFragment.LoadMyUserInfo();
+        ProfileFragment profileFragment = (ProfileFragment) getSupportFragmentManager().findFragmentById(R.id.ProfileUserFragment);
+        if(profileFragment!=null) {
+            profileFragment.LoadMyUserInfo();
+        }
     }
-
     //Инициализируем бд
     public void DataBaseInit(){
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -146,26 +117,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+
     public static void hideKeyboardFrom(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    public void Auth(){
+    public FirebaseUser Auth(){
         //Пробуем авторизоваться
-        currentUser = auth.getCurrentUser();
-        if(currentUser != null){
-            if(getSupportFragmentManager().findFragmentByTag("Auth")!=null) {
-                getSupportFragmentManager().beginTransaction().remove(ProfileFragment).remove(AuthFragment).commit();
-                ProfileFragment = new ProfileFragment();
-                setFragment(homeFragment, "1", 1);
-            }
-        }else{
-            if(getSupportFragmentManager().findFragmentByTag("3")!=null) {
-                AuthFragment = new AuthFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.ProfileFragmentConteiner, AuthFragment, "Auth").commit();
-            }
+        auth = FirebaseAuth.getInstance();
+        if(auth.getCurrentUser()!=null){
+            currentUser = auth.getCurrentUser();
+        }else {
+            return null;
         }
+        return currentUser;
     }
 
     @Override

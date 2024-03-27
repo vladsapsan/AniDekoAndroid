@@ -19,10 +19,8 @@ public class Anime {
     public String HelpingInformation;
     public boolean isVisible;
     public Map<String, Integer> RatinsgList = new HashMap<>();
-    public Map<Integer, String> JanrList = new HashMap<>();
+    public Map<Integer, String> GenreList = new HashMap<>();
     public Map<String, Comments> Comments = new HashMap<>();
-
-
     public Anime() {};
     public Anime(String Name,String TextAbout,String DateOfRealize,String Director,Map<Integer, String> JanrList,String Author,String Country,
                  String Studio,Integer Pegi,String Rating,String TypeOfAnime,String PosterImgUrl,String HelpingInformation,boolean isVisible){
@@ -30,7 +28,7 @@ public class Anime {
         this.TextAbout = TextAbout;
         this.DateOfRealize = DateOfRealize;
         this.Director = Director;
-        this.JanrList = JanrList;
+        this.GenreList = JanrList;
         this.Author = Author;
         this.Country = Country;
         this.Studio = Studio;

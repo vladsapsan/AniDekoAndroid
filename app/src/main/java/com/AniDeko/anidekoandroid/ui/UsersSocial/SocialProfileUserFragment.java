@@ -40,6 +40,7 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class SocialProfileUserFragment extends Fragment {
     MainActivity mainActivity;
@@ -79,10 +80,10 @@ public class SocialProfileUserFragment extends Fragment {
             if (cUserInfo.NickName != null) {
                 UserNameTextView.setText(cUserInfo.NickName);
             }
-            if (cUserInfo.isVerifeid == true) {
+            if (cUserInfo.isVerifeid) {
                 IsverifiedIcon.setVisibility(View.VISIBLE);
             }
-            if(cUserInfo.userStatus!=""){
+            if(!Objects.equals(cUserInfo.userStatus, "")){
                 UserStatusTextView.setText(cUserInfo.userStatus);
             }
             if(cUserInfo.PhotoUri.length()>0){
@@ -216,7 +217,6 @@ public class SocialProfileUserFragment extends Fragment {
 
         //Кнопка подписаться
         SubscribeButton = view.findViewById(R.id.SubscribeButton);
-        SubscribeButton.setEnabled(false);
         SubscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -97,7 +97,9 @@ public class AuthFragment extends Fragment {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        mainActivity.Auth();
+                                        if(mainActivity.Auth()!=null){
+                                            mainActivity.navController.navigate(R.id.action_authFragment_to_ProfileUserFragment);
+                                        }
                                     } else {
                                         Toast.makeText(getContext(), "Ошибка аутентификации",
                                                 Toast.LENGTH_SHORT).show();
@@ -114,26 +116,16 @@ public class AuthFragment extends Fragment {
         RegistrationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Переход по навигации в фграмент школа
-                RegistrationFragment RegistrationFragment = new RegistrationFragment();
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.AuthFragmentContainer, RegistrationFragment, "registration").addToBackStack(null).commit();
+                mainActivity.navController.navigate(R.id.action_authFragment_to_registrationFragment);
             }
         });
 
-        //Инициализация
+        //Кнопка пропуска авторизации
         SkipButton = view.findViewById(R.id.SkipButton);
         SkipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Кнопка пропуска авторизации и перехода в главное меню
-                HomeFragment homeFragment;
-                MainActivity mainActivity = (MainActivity) getActivity();
-                if(getActivity().getSupportFragmentManager().findFragmentByTag("1")!=null) {
-                    homeFragment = (HomeFragment) getActivity().getSupportFragmentManager().findFragmentByTag("1");
-                }else {
-                    homeFragment = (HomeFragment) mainActivity.getFragment(1);
-                }
-                mainActivity.setFragment(homeFragment,"1",1);
+
             }
         });
     }

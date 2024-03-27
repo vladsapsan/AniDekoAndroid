@@ -14,6 +14,7 @@
     <color name="MainWhite">#F5F3EF</color>
     <color name="MainWhiteTransparent">#BFF5F3EF</color>
     <color name="MainBlue">#009BEA</color>
+    <color name="MainBlueTransparent">#40009BEA</color>
     <color name="ShadowMainBlue">#BF009BEA</color>
     <color name="SupportGrayText">#AAAAAA</color>
     <color name="SupportGray">#B5B5B5</color>

@@ -430,7 +430,11 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 mainActivity.auth.signOut();
-                mainActivity.Auth();
+                if(mainActivity.Auth()==null){
+                    mainActivity.navController.navigate(R.id.action_settingsFragment_to_authFragment
+
+                    );
+                }
             }
         });
     }

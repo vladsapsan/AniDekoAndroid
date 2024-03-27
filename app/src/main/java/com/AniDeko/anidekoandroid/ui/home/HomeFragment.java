@@ -37,16 +37,11 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //анимация
-        setExitTransition(new MaterialFadeThrough());
-        setEnterTransition(new MaterialFadeThrough());
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
         //Видео трейлер
         MainAnimeVideoView = view.findViewById(R.id.MainAnimeVideoView);
         try {

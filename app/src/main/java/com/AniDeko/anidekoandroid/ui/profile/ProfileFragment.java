@@ -10,6 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,7 +85,7 @@ public class ProfileFragment extends Fragment {
             if (cUserInfo.isVerifeid == true) {
                 IsverifiedIcon.setVisibility(View.VISIBLE);
             }
-            if(cUserInfo.userStatus!=""){
+            if(cUserInfo.userStatus!=null){
                 UserStatusTextView.setText(cUserInfo.userStatus);
             }
             if(cUserInfo.PhotoUri.length()>0){
@@ -152,10 +155,11 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    private void SetIntelizationBundle(SettingsFragment fragment){
+    //Создаем банд с информацией профиля
+    private Bundle SetIntelizationBundle(){
         UserInfoBundle = new Bundle();
         UserInfoBundle.putSerializable(Bunlde_UserInfo_Tag,cUserInfo);
-        fragment.setArguments(UserInfoBundle);
+        return UserInfoBundle;
     }
     private void SearchFragmentInit(){
         searchUsersFragment = new SeacrhUsersFragment();
@@ -169,12 +173,27 @@ public class ProfileFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
+    private void CheckUserInfo(){
+        if(mainActivity.Auth()==null){
+            mainActivity.navController.navigate(R.id.action_ProfileUserFragment_to_authFragment);
+        }else{
+            //Проверяем есть ли информация о пользователе
+            if(cUserInfo!=null){
+                if(UserNameTextView.getText().length()>0){
+
+                }else {
+                    //Если есть загружаем ее
+                    LoadProfile();
+                }
+            }else {
+                //Информации нет, пытаемся ее получить и загрузить
+                LoadMyUserInfo();
+            }
+        }
+    }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
-
         //Получаем данные из Mainactivity
         mainActivity = (MainActivity) getActivity();
         UserNameTextView = view.findViewById(R.id.UserNameTextView);
@@ -188,15 +207,7 @@ public class ProfileFragment extends Fragment {
         SearchButton = view.findViewById(R.id.SearchButton);
         UserYourSubsNumber = view.findViewById(R.id.UserYourSubsNumber);
 
-        if(mainActivity.currentUser==null){
-            mainActivity.Auth();
-        }else{
-            setExitTransition(new MaterialFadeThrough());
-            setEnterTransition(new MaterialFadeThrough());
-            setReenterTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
-            LoadMyUserInfo();
-            SearchFragmentInit();
-        }
+
 
 
         //Кнопка настроек
@@ -206,9 +217,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(cUserInfo!=null) {
-                    settingsFragment = new SettingsFragment();
-                    SetIntelizationBundle(settingsFragment);
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.ProfileFragmentConteiner, settingsFragment, "Settings").addToBackStack(null).commit();
+                    ((MainActivity) getActivity()).navController.navigate(R.id.action_ProfileUserFragment_to_settingsFragment,SetIntelizationBundle());
                 }
             }
         });
@@ -217,8 +226,7 @@ public class ProfileFragment extends Fragment {
         SearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.ProfileFragmentConteiner, searchUsersFragment, "SearchUsers").addToBackStack(null).commit();
+                ((MainActivity) getActivity()).navController.navigate(R.id.action_ProfileUserFragment_to_seacrhUsersFragment);
             }
         });
 
@@ -232,6 +240,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        CheckUserInfo();
     }
 
     @Override
