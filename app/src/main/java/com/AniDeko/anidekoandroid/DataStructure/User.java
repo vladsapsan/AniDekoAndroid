@@ -24,7 +24,10 @@ public class User implements Serializable {
     public Boolean isBanned;
     public String PhotoUri;
     public String SecondPhotoUri;
-    public Map<String, String> SubScribeList = new HashMap<>();
+    //Лист с теми кто подписан на пользователя
+    public HashMap<String, String> SubScribeList = new HashMap<>();
+    //Лист с теми на кого подписан пользователь
+    public HashMap<String, String> MySubScribeList = new HashMap<>();
     public User(){}
     public User(String Nickname, String Email,Boolean isBanned){
         this.NickName = Nickname;
@@ -53,6 +56,20 @@ public class User implements Serializable {
         this.isBanned = isBanned;
         this.isVerifeid = isVerifeid;
         this.ID = ID;
+    }
+
+    //Полный конструктор
+    public User(String Nickname,String Email,String PhotoUri,String userStatus,String SecondPhotoUri,Boolean isBanned,Boolean isVerifeid,String ID,HashMap<String, String> MySubScribeList,HashMap<String, String> SubScribeList){
+        this.NickName = Nickname;
+        this.Email = Email;
+        this.PhotoUri = PhotoUri;
+        this.SecondPhotoUri = SecondPhotoUri;
+        this.userStatus = userStatus;
+        this.isBanned = isBanned;
+        this.isVerifeid = isVerifeid;
+        this.ID = ID;
+        this.MySubScribeList = MySubScribeList;
+        this.SubScribeList = SubScribeList;
     }
 
     public final void AddSubsribe(String IDProfile){

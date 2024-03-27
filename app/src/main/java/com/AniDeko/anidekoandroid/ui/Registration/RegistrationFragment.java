@@ -38,6 +38,9 @@ import com.google.firebase.database.DatabaseReference;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -67,8 +70,6 @@ public class RegistrationFragment extends Fragment {
                                     .setDisplayName(NickNameRegistrationEditText.getText().toString())
                                     .build();
                             mainActivity.auth.getCurrentUser().updateProfile(profileUpdates);
-                            ArrayList<Subscribes> subs = new ArrayList<>();
-                            subs.add(new Subscribes("",""));
                             User user = new User(email, name,"","","",false,false,mainActivity.auth.getCurrentUser().getUid());
                             //Запрос на добавление данных в бд
                             mainActivity.mDatabase.child(MainActivity.Users_Child).child(mainActivity.auth.getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {

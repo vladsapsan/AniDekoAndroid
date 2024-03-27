@@ -40,6 +40,7 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class SocialProfileUserFragment extends Fragment {
@@ -118,12 +119,12 @@ public class SocialProfileUserFragment extends Fragment {
             }else {
                 progressBarCoverPhoto.setVisibility(View.GONE);
             }
-         //   if(cUserInfo.SubList!=null){
-          //      UserSubsNumber.setText(String.valueOf(cUserInfo.SubList.size()));
-         //   }
-         //   if(cUserInfo.MySubsList!=null){
-          //      UserYourSubsNumber.setText(String.valueOf(cUserInfo.MySubsList.size()));
-         //   }
+            if(cUserInfo.MySubScribeList!=null){
+                UserSubsNumber.setText(String.valueOf(cUserInfo.MySubScribeList.size()));
+            }
+            if(cUserInfo.SubScribeList!=null){
+                UserYourSubsNumber.setText(String.valueOf(cUserInfo.SubScribeList.size()));
+            }
         }
     }
 
@@ -148,17 +149,17 @@ public class SocialProfileUserFragment extends Fragment {
     }
 
 
-  //  private void isSubscribe(){
-     //   if(mainActivity.cUserInfo.SubList!=null) {
-     //       for (Subscribes sub : mainActivity.cUserInfo.SubList) {
-      //          if (sub.SubsribeID.equals(UserID)) {
-     //               SubscribeButton.setVisibility(View.GONE);
-    //                UnSubscribeButton.setVisibility(View.VISIBLE);
-    //                break;
-    //            }
-   //         }
-    //    }
-  //  }
+    private void isSubscribe(){
+        if(mainActivity.cUserInfo.MySubScribeList!=null) {
+            for (Map.Entry<String, String> entry: mainActivity.cUserInfo.MySubScribeList.entrySet()) {
+                if (entry.getKey().equals(UserID)) {
+                    SubscribeButton.setVisibility(View.GONE);
+                    UnSubscribeButton.setVisibility(View.VISIBLE);
+                    break;
+                }
+            }
+        }
+    }
     //Получение информации о пользователе из фрагмента профиля
     private void GetBundleLoadInfoByID(){
         UserIDBunlde = getArguments();
@@ -223,32 +224,32 @@ public class SocialProfileUserFragment extends Fragment {
                 SubscribeButton.setEnabled(false);
                 progressBarSubscribe.setVisibility(View.VISIBLE);
                 SubscribeIcon.setVisibility(View.GONE);
-                databaseReference = mainActivity.mDatabase;
                 Date currentTime = Calendar.getInstance().getTime();
                 if (mainActivity.cUserInfo != null) {
+                    mainActivity.cUserInfo.MySubScribeList.put(cUserInfo.ID, String.valueOf(currentTime));
+                    cUserInfo.SubScribeList.put(mainActivity.cUserInfo.ID, String.valueOf(currentTime));
                     //Добавляем инфу  о пользователе в бд
-                    databaseReference.child(MainActivity.Users_Child)
-                            .child(mainActivity.currentUser.getUid()).child(MainActivity.Users_SubList).push().setValue(new Subscribes(UserID,currentTime.toString()))
+                    mainActivity.mDatabase.child(MainActivity.Users_Child)
+                            .child(mainActivity.cUserInfo.ID).child(MainActivity.Users_MySubsList).setValue(mainActivity.cUserInfo.MySubScribeList)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         //Добавляем в инфу в подписчики канала
-                                        databaseReference.child(MainActivity.Users_Child).child(UserID)
-                                                .child(MainActivity.Users_MySubsList)
-                                                .push().setValue(new Subscribes(mainActivity.currentUser.getUid(),currentTime.toString())).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        mainActivity.mDatabase.child(MainActivity.Users_Child).child(cUserInfo.ID)
+                                                .child(MainActivity.Users_SubList)
+                                                .setValue(cUserInfo.SubScribeList).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         if(task.isSuccessful()){
-
+                                                            Toast.makeText(getContext(), "Вы подписались", Toast.LENGTH_SHORT).show();
+                                                            isSubscribe();
+                                                            mainActivity.UpdateUserProfile();
                                                         }else {
-                                                            Toast.makeText(getContext(), "Ошибка загрузки", Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(getContext(), "Что-то пошло не так, попробуйте еще раз", Toast.LENGTH_SHORT).show();
                                                         }
                                                     }
                                                 });
-                                        Toast.makeText(getContext(), "Вы подписались", Toast.LENGTH_SHORT).show();
-                                       // isSubscribe();
-                                        mainActivity.UpdateUserProfile();
                                     } else {
                                         Toast.makeText(getContext(), "Что-то пошло не так, попробуйте еще раз", Toast.LENGTH_SHORT).show();
                                         SubscribeButton.setEnabled(true);
@@ -297,5 +298,6 @@ public class SocialProfileUserFragment extends Fragment {
                 getActivity().getSupportFragmentManager().popBackStack();
             }
         });
+        isSubscribe();
     }
 }

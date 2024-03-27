@@ -120,12 +120,12 @@ public class ProfileFragment extends Fragment {
             }else {
                 progressBarCoverPhoto.setVisibility(View.GONE);
             }
-          //  if(cUserInfo.SubList!=null){
-          //      UserSubsNumber.setText(String.valueOf(cUserInfo.SubList.size()));
-          //  }
-          //  if(cUserInfo.MySubsList!=null){
-          //      UserYourSubsNumber.setText(String.valueOf(cUserInfo.MySubsList.size()));
-          //  }
+            if(cUserInfo.MySubScribeList!=null){
+                UserSubsNumber.setText(String.valueOf(cUserInfo.MySubScribeList.size()));
+            }
+            if(cUserInfo.SubScribeList!=null){
+                UserYourSubsNumber.setText(String.valueOf(cUserInfo.SubScribeList.size()));
+            }
             SettingsButton.show();
             SearchButton.show();
         }
