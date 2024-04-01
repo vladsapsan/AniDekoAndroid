@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/SupportBlack"
+    android:clickable="true"
+    android:layout_margin="8dp"
+    app:strokeWidth="0dp"
+    app:cardCornerRadius="12dp"
+    app:strokeColor="@color/MainBlue"
+    app:rippleColor="@color/MainWhiteTransparent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_margin="16dp"
+            android:layout_width="50dp"
+            app:strokeWidth="0dp"
+            app:cardCornerRadius="6dp"
+            app:cardBackgroundColor="@color/MainWhite"
+            app:cardElevation="8dp"
+            android:layout_height="50dp">
+            <ImageView
+                android:src="@mipmap/ic_main_logo"
+                android:id="@+id/ImageProfile"
+                android:layout_width="match_parent"
+                android:scaleType="centerCrop"
+                android:layout_height="match_parent"/>
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:gravity="left|center"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/UserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/MainWhite"
+                    android:maxLines="1"
+                    android:fontFamily="@font/montserrat_semi_bold"
+                    android:textSize="12dp"
+                    android:text="NameUser"/>
+                <ImageView
+                    android:id="@+id/IsverifiedIcon"
+                    android:visibility="gone"
+                    android:layout_marginLeft="4dp"
+                    android:layout_gravity="center"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/verified24px"/>
+            </LinearLayout>
+            <TextView
+                android:layout_marginRight="16dp"
+                android:id="@+id/CommentText"
+                android:textColor="@color/MainWhite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_medium"
+                android:textSize="14dp"
+                android:text="Текст комментария"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_marginRight="16dp"
+                    android:layout_gravity="center"
+                    android:textSize="12sp"
+                    android:layout_width="wrap_content"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:textColor="@color/SupportGrayText"
+                    android:text="Дата комментария"
+                    android:layout_height="wrap_content"/>
+                <LinearLayout
+                    android:layout_marginRight="16dp"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="right|center"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_marginRight="8dp"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:textColor="@color/MainGreen"
+                        android:text="0"
+                        android:layout_height="wrap_content"/>
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:layout_width="wrap_content"
+                        app:tint ="@color/MainWhite"
+                        app:fabSize="mini"
+                        app:srcCompat ="@drawable/favorite24px"
+                        android:backgroundTint="@color/SupportBlack"
+                        style="?attr/floatingActionButtonSmallStyle"
+                        app:rippleColor = "@color/MainWhite"
+                        app:pressedTranslationZ = "10dp"
+                        android:layout_gravity="right|top"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

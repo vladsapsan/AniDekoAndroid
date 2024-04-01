@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     public  FirebaseUser currentUser;
     public StorageReference storageReference;
     public final static String Users_Child = "Users";
+    public final static String Anime_Child = "Anime";
     public final static String Users_SubList="SubScribeList";
     public final static String Users_MySubsList="MySubScribeList";
     public DatabaseReference mDatabase;

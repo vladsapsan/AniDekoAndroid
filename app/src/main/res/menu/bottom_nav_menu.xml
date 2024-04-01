@@ -5,11 +5,20 @@
         android:id="@+id/toTrendsFragment"
         android:icon="@drawable/ad_group24px"
         android:title="@string/title_trend" />
+    <item
+        android:id="@+id/toSearchAnimeFragment"
+        android:icon="@drawable/search24px"
+        android:title="@string/Search" />
 
     <item
-        android:id="@+id/home"
+        android:id="@+id/toHomeFragments"
         android:icon="@drawable/home24px"
         android:title="@string/title_home" />
+
+    <item
+        android:id="@+id/CollectionFragment"
+        android:icon="@drawable/menu24px"
+        android:title="Коллекции" />
 
     <item
         android:id="@+id/toProfileUserFragment"

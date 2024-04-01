@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Anime {
+    public String ID;
     public String Name;
     public String TextAbout;
     public String DateOfRealize;
@@ -19,10 +20,10 @@ public class Anime {
     public String HelpingInformation;
     public boolean isVisible;
     public Map<String, Integer> RatinsgList = new HashMap<>();
-    public Map<Integer, String> GenreList = new HashMap<>();
-    public Map<String, Comments> Comments = new HashMap<>();
+    public Map<String, String> GenreList = new HashMap<>();
+    public HashMap<String, Comments> Comments = new HashMap<>();
     public Anime() {};
-    public Anime(String Name,String TextAbout,String DateOfRealize,String Director,Map<Integer, String> JanrList,String Author,String Country,
+    public Anime(String ID,String Name,String TextAbout,String DateOfRealize,String Director,Map<String, String> JanrList,String Author,String Country,
                  String Studio,Integer Pegi,String Rating,String TypeOfAnime,String PosterImgUrl,String HelpingInformation,boolean isVisible){
         this.Name = Name;
         this.TextAbout = TextAbout;
@@ -38,5 +39,6 @@ public class Anime {
         this.PosterImgUrl = PosterImgUrl;
         this.HelpingInformation = HelpingInformation;
         this.isVisible = isVisible;
+        this.ID = ID;
     }
 }

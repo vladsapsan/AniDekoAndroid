@@ -56,7 +56,7 @@ public class SettingsFragment extends Fragment {
     ImageView UserPhoto,UserCover;
     User cUserInfo;
     BottomSheetDialog bottomSheetDialog;
-    LinearLayout EditAvatarProfileButton,EditStatusProfileButton,EditCoverProfileButton,EditNickNameProfileButton;
+    LinearLayout EditAvatarProfileButton,EditStatusProfileButton,EditCoverProfileButton,EditNickNameProfileButton,AddAnimeButton;
 
     ImageView BackToProfileButton;
 
@@ -420,7 +420,16 @@ public class SettingsFragment extends Fragment {
         BackToProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().getSupportFragmentManager().popBackStack();
+                ((MainActivity) getActivity()).navController.popBackStack();
+            }
+        });
+
+        //Кнопка добавления аниме
+        AddAnimeButton = view.findViewById(R.id.AddAnimeButton);
+        AddAnimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).navController.navigate(R.id.action_settingsFragment_to_addAnimeFragment);
             }
         });
 

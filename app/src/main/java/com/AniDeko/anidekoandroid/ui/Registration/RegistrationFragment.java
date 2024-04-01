@@ -80,7 +80,6 @@ public class RegistrationFragment extends Fragment {
                                         if(mainActivity.Auth()!=null){
                                             mainActivity.navController.navigate(R.id.action_registrationFragment_to_ProfileUserFragment);
                                         }
-
                                     }else {
                                         Toast.makeText(getContext(), "Ошибка загрузки данных...", Toast.LENGTH_SHORT).show();
                                         progressBarRegistration.setVisibility(View.GONE);

@@ -3,21 +3,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/home">
+    app:startDestination="@+id/toHomeFragments">
 
-    <fragment
-        android:id="@+id/home"
-        android:name="com.AniDeko.anidekoandroid.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" >
 
-        <action
-            android:id="@+id/action_home_to_ProfileUserFragment2"
-            app:destination="@id/ProfileUserFragment" />
-        <action
-            android:id="@+id/action_home_to_trends"
-            app:destination="@id/trends" />
-    </fragment>
+    <navigation android:id="@+id/toHomeFragments"
+        app:startDestination="@id/home">
+        <fragment
+            android:id="@+id/home"
+            android:name="com.AniDeko.anidekoandroid.ui.home.HomeFragment"
+            android:label="@string/title_home"
+            tools:layout="@layout/fragment_home" >
+
+            <action
+                android:id="@+id/action_home_to_ProfileUserFragment2"
+                app:destination="@id/ProfileUserFragment" />
+            <action
+                android:id="@+id/action_home_to_trends"
+                app:destination="@id/trends" />
+            <action
+                android:id="@+id/action_home_to_animeFragment"
+                app:destination="@id/animeFragment" />
+
+        </fragment>
+        <fragment
+            android:id="@+id/animeFragment"
+            android:name="com.AniDeko.anidekoandroid.ui.Anime.AnimeFragment"
+            android:label="fragment_anime"
+            tools:layout="@layout/fragment_anime" >
+            <action
+                android:id="@+id/action_animeFragment_to_commentsFragment"
+                app:destination="@id/commentsFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/commentsFragment"
+            android:name="com.AniDeko.anidekoandroid.ui.Comments.CommentsFragment"
+            android:label="fragment_comments"
+            tools:layout="@layout/fragment_comments" />
+    </navigation>
+
 
 
 
@@ -34,6 +57,15 @@
         </fragment>
     </navigation>
 
+
+    <navigation android:id="@+id/toSearchAnimeFragment"
+        app:startDestination="@id/searchAnimeFragment">
+        <fragment
+            android:id="@+id/searchAnimeFragment"
+            android:name="com.AniDeko.anidekoandroid.ui.Anime.SearchAnimeFragment"
+            android:label="fragment_search_anime"
+            tools:layout="@layout/fragment_search_anime" />
+    </navigation>
 
     <navigation android:id="@+id/toProfileUserFragment"
         app:startDestination="@id/ProfileUserFragment">
@@ -57,13 +89,21 @@
         </fragment>
 
         <fragment
+            android:id="@+id/addAnimeFragment"
+            android:name="com.AniDeko.anidekoandroid.ui.Anime.AddAnimeFragment"
+            android:label="fragment_add_anime"
+            tools:layout="@layout/fragment_add_anime" />
+        <fragment
             android:id="@+id/settingsFragment"
             android:name="com.AniDeko.anidekoandroid.ui.Settings.SettingsFragment"
             android:label="fragment_seacrh_users"
-            tools:layout="@layout/fragment_seacrh_users" >
+            tools:layout="@layout/fragment_settings" >
             <action
                 android:id="@+id/action_settingsFragment_to_authFragment"
                 app:destination="@id/authFragment" />
+            <action
+                android:id="@+id/action_settingsFragment_to_addAnimeFragment"
+                app:destination="@id/addAnimeFragment" />
         </fragment>
         <fragment
             android:id="@+id/seacrhUsersFragment"
@@ -104,9 +144,6 @@
                 app:destination="@id/ProfileUserFragment" />
         </fragment>
     </navigation>
-
-
-
 
 
 

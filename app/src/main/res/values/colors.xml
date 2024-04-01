@@ -21,4 +21,7 @@
     <color name="TransparentColor">#00000000</color>
     <color name="MainRed">#ff2400</color>
     <color name="LightYellow">#ffbf1f</color>
+    <color name="MainOrange">#E25822</color>
+    <color name="MainGreen">#00ff00</color>
+    <color name="SupportBlack">#343434</color>
 </resources>

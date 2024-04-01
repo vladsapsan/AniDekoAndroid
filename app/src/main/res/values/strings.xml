@@ -22,4 +22,5 @@
     <string name="EditProfileUserStatus">Изменить статус профиля</string>
     <string name="EditProfileUserCover">Изменить обложку профиля</string>
     <string name="VersionCode">1.0.1</string>
+    <string name="Search">Поиск</string>
 </resources>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="true"
+    android:background="@color/MainBlack"
+    tools:context=".ui.Anime.SearchAnimeFragment">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_marginTop="36dp"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/MainWhite"
+        android:layout_gravity="center_horizontal"
+        app:cardCornerRadius="14dp"
+        app:strokeWidth="0dp"
+        android:layout_height="65dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_gravity="left|center_vertical"
+            android:layout_width="30dp"
+            android:layout_marginLeft="16dp"
+            android:src="@drawable/search24px"
+            android:layout_height="30dp"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_gravity="center"
+            android:layout_width="40dp"
+            android:src="@mipmap/ic_main_logo"
+            android:layout_height="40dp"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_gravity="right|center_vertical"
+            android:layout_width="30dp"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/sort24px"
+            android:layout_height="30dp"/>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/AnimeTab"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:tabMode="scrollable"
+        android:background="@drawable/navigation_view_background"
+        android:layout_marginTop="16dp"
+        app:tabIndicatorColor="@color/MainBlue"
+        app:tabRippleColor="@color/MainBlueTransparent"
+        app:tabTextColor="@color/MainBlack"
+        app:tabSelectedTextColor="@color/MainBlue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Романтика" />
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Приключения" />
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Комедия" />
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Сенен" />
+    </com.google.android.material.tabs.TabLayout>
+    
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/SearchAnimeViewPage"
+        android:layout_marginBottom="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
+</FrameLayout>

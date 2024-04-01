@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="true"
+    android:background="@color/MainBlack"
+    tools:context=".ui.Anime.AnimeFragment">
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/BackToButton"
+        android:layout_width="wrap_content"
+        app:tint="@color/MainWhite"
+        android:layout_gravity="left|top"
+        android:layout_marginLeft="20dp"
+        app:rippleColor="@color/MainWhiteTransparent"
+        android:layout_marginTop="30dp"
+        style="?attr/floatingActionButtonSmallStyle"
+        android:backgroundTint="@color/MainBlack"
+        app:srcCompat="@drawable/navigate_before24px"
+        android:layout_height="wrap_content"/>
+
+    <ScrollView
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/AnimeImageWallPapper"
+                    android:layout_width="match_parent"
+                    android:alpha="0.5"
+                    android:layout_height="390dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/imagplug"/>
+                <androidx.cardview.widget.CardView
+                    app:cardCornerRadius="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="74dp"
+                    android:layout_marginRight="74dp"
+                    android:backgroundTint="@color/MainBlack"
+                    android:layout_height="332dp">
+
+                    <ImageView
+                        android:id="@+id/AnimePoster"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/imagplug"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+            </FrameLayout>
+            </FrameLayout>
+
+
+
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_view_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    app:strokeWidth="0dp"
+                    android:layout_marginBottom="6dp"
+                    app:cardCornerRadius="6dp"
+                    app:cardBackgroundColor="@color/MainBlackTransparent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_marginTop="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        </FrameLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Название аниме"
+                            android:textSize="18sp"
+                            android:lines="1"
+                            android:textColor="@color/MainWhite"
+                            android:fontFamily="@font/montserrat_bold"
+                            android:gravity="center_horizontal" />
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Дополнительное название"
+                                android:textSize="12dp"
+                                android:textColor="@color/SupportGrayText"
+                                android:fontFamily="@font/montserrat_bold"
+                                android:gravity="center_horizontal" />
+                        </FrameLayout>
+                        <LinearLayout
+                            android:layout_marginTop="12dp"
+                            android:layout_width="match_parent"
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="2024"
+                                android:textSize="12dp"
+                                android:textColor="@color/MainWhite"
+                                android:fontFamily="@font/montserrat_bold"
+                                android:gravity="center_horizontal" />
+                        </LinearLayout>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_marginTop="16dp"
+                            android:id="@+id/AnimeOfthisSeasonRecycleView"
+                            android:layout_width="match_parent"
+                            tools:listitem="@layout/list_item_genre"
+                            android:layout_height="25dp"/>
+
+                        <TextView
+                            android:id="@+id/AnimeTextAbout"
+                            android:layout_marginTop="24dp"
+                            android:maxLines="3"
+                            android:layout_gravity="left"
+                            android:layout_width="wrap_content"
+                            android:ellipsize="end"
+                            android:layout_height="wrap_content"
+                            android:text="Описание тайтла Описание тайтла Описание тайтла Описание тайтла Описание тайтла Описание тайтла Описание тайтла Описание тайтла Описание тайтла Описание тайтла Описание тайтла Описание тайтла Описание тайтла Описание тайтла Описание тайтлаОписание тайтла Описание тайтла Описание тайтла"
+                            android:textSize="12dp"
+                            android:textColor="@color/MainWhite"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:gravity="left" />
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/FullAnimeTextCard"
+                            android:clickable="true"
+                            app:rippleColor="@color/MainWhiteTransparent"
+                            android:layout_margin="8dp"
+                            android:layout_width="wrap_content"
+                            app:cardElevation="6dp"
+                            app:cardCornerRadius="8dp"
+                            app:strokeColor="@color/MainBlue"
+                            android:layout_gravity="center"
+                            app:cardBackgroundColor="@color/SupportBlack"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:id="@+id/ArrowImageFullAnimeTextCard"
+                                android:layout_margin="10dp"
+                                android:layout_gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/expand_more24px"/>
+                        </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_marginLeft="36dp"
+                android:layout_marginRight="36dp"
+                app:dividerColor="@color/SupportGray"
+                android:layout_height="wrap_content"/>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:clickable="true"
+                app:rippleColor="@color/MainWhiteTransparent"
+                android:layout_width="match_parent"
+                app:strokeWidth="0dp"
+                android:layout_marginBottom="6dp"
+                app:cardCornerRadius="6dp"
+                app:cardBackgroundColor="@color/MainBlackTransparent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </FrameLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Кадры из сериала"
+                        android:textSize="18sp"
+                        android:lines="1"
+                        android:textColor="@color/MainWhite"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:gravity="center_horizontal" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_marginLeft="36dp"
+                android:layout_marginRight="36dp"
+                app:dividerColor="@color/SupportGray"
+                android:layout_height="wrap_content"/>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:clickable="true"
+                app:rippleColor="@color/MainWhiteTransparent"
+                android:layout_width="match_parent"
+                app:strokeWidth="0dp"
+                android:layout_marginBottom="6dp"
+                app:cardCornerRadius="6dp"
+                app:cardBackgroundColor="@color/MainBlackTransparent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </FrameLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Похожее"
+                        android:textSize="18sp"
+                        android:lines="1"
+                        android:textColor="@color/MainWhite"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:gravity="center_horizontal" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/SimmilarAnime"
+                        android:layout_width="match_parent"
+                        tools:listitem="@layout/animecard"
+                        android:layout_height="225dp"/>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/CommentsCard"
+
+                android:clickable="true"
+                app:rippleColor="@color/MainWhiteTransparent"
+                android:layout_margin="16dp"
+                android:layout_width="match_parent"
+                app:cardCornerRadius="8dp"
+                app:strokeColor="@color/MainBlue"
+                app:cardBackgroundColor="@color/SupportBlack"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:scaleType="centerCrop"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/chat24px"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Комментарии"
+                            android:textSize="18dp"
+                            android:lines="1"
+                            android:textColor="@color/MainWhite"
+                            android:fontFamily="@font/montserrat_bold"
+                            android:gravity="center_horizontal" />
+                        <FrameLayout
+                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_gravity="right"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textSize="14dp"
+                                android:lines="1"
+                                android:textColor="@color/MainWhite"
+                                android:fontFamily="@font/montserrat_medium"
+                                android:gravity="center_horizontal" />
+                        </FrameLayout>
+                    </LinearLayout>
+                    <FrameLayout
+                        android:layout_marginTop="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_gravity="right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/expand_more24px"/>
+                    </FrameLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</FrameLayout>

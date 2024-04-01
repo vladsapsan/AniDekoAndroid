@@ -69,7 +69,6 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/UsersRycecleView"
                 android:layout_width="match_parent"
-                android:layout_marginBottom="95dp"
                 android:layout_height="match_parent"/>
 
         </LinearLayout>

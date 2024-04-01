@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="true"
+    android:isScrollContainer="false"
+    android:background="@color/MainBlack"
+    tools:context=".ui.Comments.CommentsFragment">
+
+
+
+
+    <LinearLayout
+        android:layout_marginTop="24dp"
+        android:isScrollContainer="false"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:isScrollContainer="false"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+            <ImageView
+                android:clickable="true"
+                android:id="@+id/BackToProfileButton"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:paddingLeft="10dp"
+                app:tint="@color/MainBlack"
+                android:scaleType="centerCrop"
+                style="?attr/floatingActionButtonSmallStyle"
+                android:backgroundTint="@color/MainWhite"
+                app:srcCompat="@drawable/arrow_back_ios24px" />
+            <TextView
+                android:layout_marginLeft="8dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_bold"
+                android:textSize="20dp"
+                android:textColor="@color/MainWhite"
+                android:text="Комментарии"/>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="24dp"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:gravity="right"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_gravity="right"
+                            android:layout_marginRight="2dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_bold"
+                            android:textSize="16dp"
+                            android:textColor="@color/MainWhite"
+                            android:text="12K"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:scaleType="centerCrop"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/chat24px"/>
+                    </LinearLayout>
+
+                </FrameLayout>
+            </LinearLayout>
+            <TextView
+                android:layout_gravity="left"
+                android:layout_marginLeft="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_bold"
+                android:textSize="12dp"
+                android:textColor="@color/SupportGrayText"
+                android:text="Название тайтла"/>
+        </LinearLayout>
+
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+
+            app:dividerColor="@color/MainBlue"
+            android:layout_height="wrap_content"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginBottom="0dp"
+            android:id="@+id/UsersCommentsRycecleView"
+            android:layout_width="match_parent"
+            tools:listitem="@layout/list_item_comments"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/MessegeCard"
+        android:visibility="gone"
+        android:isScrollContainer="false"
+        app:cardCornerRadius="10dp"
+        android:layout_marginBottom="16dp"
+        android:layout_gravity="bottom"
+        app:strokeColor="@color/MainBlue"
+        app:strokeWidth="1.5dp"
+        android:layout_width="match_parent"
+        android:background="@drawable/comments_card_background"
+        app:cardBackgroundColor="@color/SupportBlack"
+        android:layout_height="wrap_content">
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="16dp"
+            app:counterMaxLength="100"
+            android:layout_marginBottom="6dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="60dp"
+            app:counterEnabled="true"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeColor="@null"
+            app:boxBackgroundColor="@color/MainWhite"
+            app:boxStrokeWidth="0dp"
+            app:counterTextColor="@color/MainWhite"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:background="@null"
+                android:id="@+id/NewCommentEditText"
+                android:textSize="12dp"
+                android:inputType="textMultiLine"
+                android:textColor="@color/MainBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="32dp"
+                android:fontFamily="@font/montserrat_semi_bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/SendMessegeCard"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="4dp"
+                app:cardCornerRadius="100dp"
+                android:layout_gravity="right|center"
+                android:clickable="true"
+                app:rippleColor="@color/MainWhiteTransparent"
+                app:strokeWidth="0dp"
+                app:cardBackgroundColor="@color/MainBlue"
+                android:layout_width="40dp"
+                android:layout_height="40dp">
+                <ProgressBar
+                    android:visibility="gone"
+                    android:id="@+id/progressBarSendMessege"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_gravity="center"
+                    android:indeterminateTint="@color/white"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp" />
+                <ImageView
+                    android:visibility="visible"
+                    android:id="@+id/ImageSend"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/send24px"/>
+            </com.google.android.material.card.MaterialCardView>
+
+    </com.google.android.material.card.MaterialCardView>
+</FrameLayout>

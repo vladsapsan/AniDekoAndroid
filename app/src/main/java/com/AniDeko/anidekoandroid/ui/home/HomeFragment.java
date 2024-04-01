@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.AniDeko.anidekoandroid.MainActivity;
 import com.AniDeko.anidekoandroid.R;
 import com.AniDeko.anidekoandroid.databinding.FragmentHomeBinding;
 import com.google.android.material.transition.MaterialFade;
@@ -25,6 +27,7 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private VideoView MainAnimeVideoView;
+    private Button GotoTopButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -72,6 +75,15 @@ public class HomeFragment extends Fragment {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 mp.start();
+            }
+        });
+
+        //Кнопка перехода к топ аниме страницы
+        GotoTopButton = view.findViewById(R.id.GotoTopButton);
+        GotoTopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).navController.navigate(R.id.action_home_to_animeFragment);
             }
         });
     }
